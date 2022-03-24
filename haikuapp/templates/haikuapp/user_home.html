@@ -1,5 +1,6 @@
 {% extends "haikuapp/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %} User Home {% endblock title %}
 
 
@@ -8,5 +9,7 @@
 
 
 {% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+
     <div class="h3 mx-auto p-4">USER HOME PAGE</div>
 {% endblock %}

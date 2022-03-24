@@ -1,0 +1,28 @@
+{% extends "haikuapp/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Manager Options | Haiku Entries {% endblock title %}
+
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+
+{% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+
+<div class="h3 mx-auto p-4">HAIKU ENTRIES</div>
+<div class="list-group w-75 mx-auto">
+    {% for h in haiku %}
+    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ h.author_alias }}</h5>
+            <small><span class="badge rounded-pill bg-primary">{{ h.entry_status }}</span></small>
+        </div>
+        <p class="mb-1">{{ h.haiku_entry }}</p>
+        <small>{{ h.haiku_theme }}</small>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "haikuapp/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Submit an Entry {% endblock title %}
+
+
+{% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+
+<div class="container mx-auto row m-4">
+    <div class=" customCard col-lg-8">
+        <div class="card-body">
+            <h5 class="card-title">Submit an Entry Form</h5>
+            <p class="card-text small">Fill out the form.</p>
+
+            <!--Submit an Entry Form-->
+            <form class="row" method="POST">
+                {% csrf_token %} <!-- cross-site request forgery -->
+
+                <div class="col-md-6 p-2">
+                    <label class="form-label">Full Name<span class="text-danger">*</span></label>
+                    {{ form.full_name|as_crispy_field }}
+                </div>
+                <div class="col-md-6 p-2">
+                    <label class="form-label">Email Address<span class="text-danger">*</span></label>
+                    {{ form.email|as_crispy_field }}
+                </div>
+                <div class="col-md-12 p-2">
+                    <label class="form-label">Haiku Title</label>
+                    {{ form.haiku_title|as_crispy_field }}
+                </div>
+                <div class="col-md-6 p-2">
+                    <label class="form-label">Haiku Theme<span class="text-danger">*</span></label>
+                    {{ form.haiku_theme|as_crispy_field }}
+                </div>
+                <div class="col-md-6 p-2">
+                    <label class="form-label">Author Alias<span class="text-danger">*</span></label>
+                    {{ form.author_alias|as_crispy_field }}
+                </div>
+                <span class="p-1 pt-2">Haiku Entry</span>
+                <div class=" col-md-4 p-2"><input type="text" class="form-control" id="line1" name="line1" required
+                                                  placeholder="Line 1"></div>
+                <div class=" col-md-4 p-2"><input type="text" class="form-control" id="line2" name="line2" required
+                                                  placeholder="Line 2"></div>
+                <div class=" col-md-4 p-2"><input type="text" class="form-control" id="line3" name="line3" required
+                                                  placeholder="Line 3"></div>
+                <!-- submit button -->
+                <div class=" col-md-12 p-2 pt-4">
+                    <button type="submit" class="btn1">
+                        <span class="text1"></span>
+                        <span class="flip-front1">Submit</span>
+                        <span class="flip-back1">Submit</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <img src="{% static 'haikuapp/images/submit_poster.png'%}" class="mx-auto w-100">
+    </div>
+</div>
+
+{% endblock %}

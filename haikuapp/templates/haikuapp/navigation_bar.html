@@ -1,0 +1,60 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand"><img src="{% static 'haikuapp/images/weHaiku.png' %}" width="40"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                {% if visitor_access %}
+                <li class="nav-item">
+                    {% if link_active_home %}
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    {% else %}
+                    <a class="nav-link" href="/">Home</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">History</a>
+                </li>
+                <li class="nav-item">
+                    {% if link_active_entry %}
+                    <a class="nav-link active" aria-current="page"href="submit_an_entry/">Submit an Entry</a>
+                    {% else %}
+                    <a class="nav-link" href="/submit_an_entry">Submit an Entry</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="  #">About Us</a>
+                </li>
+                {% endif %}
+
+                {% if user_logged_in %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user_home">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Manager Options
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Categories</a></li>
+                        <li><a class="dropdown-item" href="#">Haiku</a></li>
+                        <li><a class="dropdown-item" href="/user_haiku_entries">Haiku Entries</a></li>
+                        <li><a class="dropdown-item" href="#">Comments</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user_logout">Logout</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>

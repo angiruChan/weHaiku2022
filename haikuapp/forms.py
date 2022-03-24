@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -15,3 +16,35 @@ class AuthForm(AuthenticationForm):
         attrs={'class': 'form-control', 'placeholder': 'username'}))
     password = forms.CharField(label="", widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': 'password'}))
+
+
+# submit an entry form
+class EntryForm(forms.ModelForm):
+    THEMES = {
+        ('', '- Select -'),
+        ('human nature', 'human nature'),
+        ('nature and seasons', 'nature and seasons'),
+        ('others', 'others'),
+    }
+
+    # custom fields
+    full_name = forms.CharField(label="", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 250}))
+    email = forms.EmailField(label="", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 254}))
+    haiku_title = forms.CharField(label="", required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 250}))
+    author_alias = forms.CharField(label="", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 250}))
+    haiku_theme = forms.ChoiceField(choices=sorted(THEMES), label="", initial='',
+                                    widget=forms.Select(attrs={'class': 'form-select'}), required=True)
+
+    class Meta:
+        model = Entry
+        fields = ("full_name", "email", "haiku_title", "author_alias", "haiku_theme")
+
+
+class EntryStatusForm(forms.ModelForm):
+    class Meta:
+        model = Entry_Status
+        fields = ("entry_status",)

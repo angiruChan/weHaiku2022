@@ -6,34 +6,142 @@
 
 {% block custom_css %}
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+
+    body{
+        background-color: #c2c2c2;
+        padding-top: 9%;
+    }
     .formFields{
         margin-bottom: 3%;
     }
+    .smallHeading{
+        background-color: #969292;
+        min-height: 40px;
+    }
+    .whlogo{
+        width: 35px;
+        padding: 1.5% 1.5% 2.5% 1.5%;
+    }
+    .btn1{
+        margin-top: 4%;
+    }
+    .loginGraphics{
+        padding: 5%;
+        position: relative;
+        font-family: 'Kalam', cursive;
+        font-size: 1.5vw;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .box{
+        box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
+        -webkit-box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
+        -moz-box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
+    }
+    #animation-demo {
+        position: relative;
+        text-align: center;
+    }
+    .animated {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+    }
+
+    @-webkit-keyframes bounceIn {
+        0% {
+            opacity: 0;
+            -webkit-transform: scale(.3);
+        }
+
+        50% {
+            opacity: 1;
+            -webkit-transform: scale(1.05);
+        }
+
+        70% {
+            -webkit-transform: scale(.9);
+        }
+
+        100% {
+             -webkit-transform: scale(1);
+        }
+    }
+
+    @keyframes bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(.3);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        70% {
+            transform: scale(.9);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .bounceIn {
+        -webkit-animation-name: bounceIn;
+        animation-name: bounceIn;
+    }
+
 </style>
 {% endblock custom_css %}
 
 
 {% block content %}
+<div class="genContainer align-middle">
+    <div class="row mx-auto w-75 box centerDiv">
+        <div class="col-md-6 bg-light">
+            <div class="row">
+                <div class="col-12 smallHeading">
+                    <img src="{% static 'haikuapp/images/weHaiku-white.png' %}" class="whlogo">
+                    <span class="text-light small">we<strong>Haiku</strong></span>
+                </div>
 
-<div class="card mx-auto m-4 p-4" style="width: 30rem;">
-    <div class="headline mx-auto h3">LOGIN</div>
-
-    {% if message %}
-    <p class="text-center text-danger"><small>{{ message }}</small></p>
-    {% endif %}
-
-    <form method="POST" class="post-form">
-        {% csrf_token %} <!-- cross-site request forgery -->
-        <div class="container">
-            <div class="formItems">
-                <div class="formFields">{{ login_form.username|as_crispy_field }}</div>
-                <div class="formFields">{{ login_form.password|as_crispy_field }}</div>
-                <div class="logButtonCon">
-                    <button type="submit" class="btn btn-light logButton">Login</button>
+                <div class="col-12" style="padding: 10%;">
+                    <div class="h3 fw-bold" style="color:#9f2064">LOGIN</div>
+                    <div class="small pb-4" style="color:#9f2064">access to manage the website.</div>
+                    <!-- error message -->
+                    {% if message %}
+                    <p class="text-center text-danger"><small>{{ message }}</small></p>
+                    {% endif %}
+                    <!-- login form -->
+                    <form method="POST" class="post-form">
+                        {% csrf_token %} <!-- cross-site request forgery -->
+                        <div class="formItems">
+                            <div class="formFields">{{ login_form.username|as_crispy_field }}</div>
+                            <div class="formFields">{{ login_form.password|as_crispy_field }}</div>
+                            <button type="submit" class="btn1">
+                                <span class="text1"></span>
+                                <span class="flip-front1">Login</span>
+                                <span class="flip-back1">Login</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
+
+        <div class="col-md-6 loginGraphics"
+             style="background-image: url({% static 'haikuapp/images/magenta-bg.png' %});">
+            <div id="animation-demo" class="animated bounceIn">
+                <img src="{% static 'haikuapp/images/login_graphics2.png'%}" class="w-50">
+                <p class="text-light mt-2">Write in fewest possible words.</p>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 {% endblock %}

@@ -64,12 +64,7 @@ class Comment(models.Model):
 
 
 class Entry_Status(models.Model):
-    ENTRY_STATUS_CHOICES = (
-        ('accepted', 'accepted'),
-        ('rejected', 'rejected'),
-    )
-
-    entry_status = models.CharField(choices=ENTRY_STATUS_CHOICES, max_length=45)
+    entry_status = models.CharField(max_length=45, unique=True)
     date_updated = models.DateTimeField(auto_now=True, blank=True)
 
     def __str__(self):
@@ -80,12 +75,20 @@ class Entry_Status(models.Model):
 
 
 class Entry(models.Model):
+
+    THEMES = {
+        ('', '- Select -'),
+        ('human nature', 'human nature'),
+        ('nature and seasons', 'nature and seasons'),
+        ('others', 'others'),
+    }
+
     full_name = models.CharField(max_length=250, blank=True, null=True)
     email = models.EmailField(max_length=254)
-    haiku_title = models.CharField(max_length=100)
+    haiku_title = models.CharField(max_length=100, blank=True, null=True)
     haiku_entry = models.CharField(max_length=500)
     author_alias = models.CharField(max_length=100)
-    haiku_theme = models.CharField(max_length=100)
+    haiku_theme = models.CharField(choices=sorted(THEMES), max_length=100)
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     # foreign keys
     entry_status = models.ForeignKey(Entry_Status, on_delete=models.CASCADE)

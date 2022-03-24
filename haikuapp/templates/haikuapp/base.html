@@ -17,84 +17,16 @@
 
     <!-- icon -->
     <link rel="icon" type="image/png" href="{% static 'haikuapp/images/wehaiku-box.png' %}"/>
-
-    <style>
-        body{
-            font-family: 'Poppins', sans-serif;
-        }
-
-    </style>
+    <!-- custom css-->
+    <link rel="stylesheet" href="{% static 'haikuapp/css/general_css.css' %}">
     {% block custom_css %}{% endblock custom_css %}
 
 </head>
 <body>
-
-{% if login_page %}
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand">
-      <img src="{% static 'haikuapp/images/weHaiku.png' %}" width="40">
-    </a>
-  </div>
-</nav>
-{% else %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand"><img src="{% static 'haikuapp/images/weHaiku.png' %}" width="40"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                {% if visitor_access %}
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Submit an Entry</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About Us</a>
-                </li>
-                {% endif %}
-
-                {% if user_logged_in %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Visitor's Access</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Manager Options
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Haiku Entries</a></li>
-                        <li><a class="dropdown-item" href="#">Manage Categories</a></li>
-                        <li><a class="dropdown-item" href="#">Manage Haiku</a></li>
-                        <li><a class="dropdown-item" href="#">Comments</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user_logout">Logout</a>
-                </li>
-                {% endif %}
-
-            </ul>
-        </div>
-    </div>
-</nav>
-{% endif%}
-
+{% block content %}{% endblock content %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
-{% block content %}{% endblock content %}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

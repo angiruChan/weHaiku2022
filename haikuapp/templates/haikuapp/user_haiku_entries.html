@@ -5,24 +5,127 @@
 
 
 {% block custom_css %}
+<style>
+    .container2{
+        padding: 4% 0% 4% 0%;
+    }
+    .iconSize{
+        width: 10px;
+    }
+    .list-group-item{
+        border: 1px solid #bababa;
+    }
+    .modal-header{
+        border-bottom: 3px solid #9f2064;
+    }
+</style>
 {% endblock custom_css %}
 
 
 {% block content %}
 {% include "haikuapp/navigation_bar.html" %}
 
-<div class="h3 mx-auto p-4">HAIKU ENTRIES</div>
-<div class="list-group w-75 mx-auto">
-    {% for h in haiku %}
-    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ h.author_alias }}</h5>
-            <small><span class="badge rounded-pill bg-primary">{{ h.entry_status }}</span></small>
+<div class="w-75 mx-auto container2">
+    <div class="d-sm-flex pb-3 justify-content-between">
+        <div class="h3">HAIKU ENTRIES</div>
+        <!-- Button trigger modal -->
+        <div class="btn btn-outline-magenta" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <img src="{% static 'haikuapp/images/plus.png' %}" width="20px" class="align-middle">
+            <span style="padding-left: 5px;">Add Entry</span>
         </div>
-        <p class="mb-1">{{ h.haiku_entry }}</p>
-        <small>{{ h.haiku_theme }}</small>
-    </a>
-    {% endfor %}
+    </div>
+
+    <!-- Calling all haiku entries -->
+    <div class="list-group">
+        <ul class="list-group">
+            {% for h in haiku %}
+            <li class="list-group-item">
+
+                <div class="d-flex w-100 justify-content-between">
+                    <div class="mb-2">
+                        <span class="badge bg-yellow align-middle small">{{ h.entry_status }}</span>
+                    </div>
+                    <!-- dropdown menu -->
+                    <div class="btn-group" title="more options">
+                        <p type="button" class="" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% static 'haikuapp/images/more.png' %}" width="20px"></p>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                            <li><a class="dropdown-item" href="#"> Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h6 class="mb-3">{{ h.haiku_entry }}</h6>
+                <div class="d-sm-flex w-100 small">
+                    <div style="padding-right: 1.5%;">
+                        <span class="h7 text-magenta fw-bold">Author:</span>
+                        <span class="text-secondary">{{ h.author_alias }}</span>
+                    </div>
+                    <div style="padding-right: 1.5%;">
+                        <span class="h7 text-magenta fw-bold">Email:</span>
+                        <span class="text-secondary">{{ h.email }}</span>
+                    </div>
+                </div>
+                <div class="mb-1 small">
+                    <span class="h7 text-magenta fw-bold">Theme:</span>
+                    <span class="text-secondary">{{ h.haiku_theme }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 
+
+<!-- Add Haiku Entry Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add a Haiku Entry</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    {% csrf_token %} <!-- cross-site request forgery -->
+                    <div class="row p-4">
+                        <div class="col-md-6 p-2">
+                            <label class="form-label">Full Name<span class="text-danger">*</span></label>
+                            {{ form.full_name|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <label class="form-label">Email Address<span class="text-danger">*</span></label>
+                            {{ form.email|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 p-2">
+                            <label class="form-label">Haiku Title</label>
+                            {{ form.haiku_title|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <label class="form-label">Haiku Theme<span class="text-danger">*</span></label>
+                            {{ form.haiku_theme|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <label class="form-label">Author Alias<span class="text-danger">*</span></label>
+                            {{ form.author_alias|as_crispy_field }}
+                        </div>
+                        <span class="p-1 pt-2">Haiku Entry</span>
+                        <div class="col-lg-4 p-2"><input type="text" class="form-control" id="line1" name="line1"
+                                                        required placeholder="Line 1"></div>
+                        <div class="col-lg-4 p-2"><input type="text" class="form-control" id="line2" name="line2"
+                                                        required placeholder="Line 2"></div>
+                        <div class="col-lg-4 p-2"><input type="text" class="form-control" id="line3" name="line3"
+                                                        required placeholder="Line 3"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-grey" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-magenta">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

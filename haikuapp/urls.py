@@ -10,5 +10,4 @@ urlpatterns = [
     path("user_home/", views.user_home, name="user_home"),
     path("submit_an_entry/", views.submit_an_entry, name="submit_an_entry"),
     path("user_haiku_entries/", views.user_haiku_entries, name="user_haiku_entries"),
-    path("access_denied/", views.access_denied, name="access_denied"),
 ]

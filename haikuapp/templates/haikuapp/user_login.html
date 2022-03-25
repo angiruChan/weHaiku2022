@@ -10,7 +10,6 @@
 
     body{
         background-color: #c2c2c2;
-        padding-top: 9%;
     }
     .formFields{
         margin-bottom: 3%;
@@ -39,7 +38,7 @@
         -webkit-box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
         -moz-box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
     }
-    #animation-demo {
+    #animation-graphics {
         position: relative;
         text-align: center;
     }
@@ -55,16 +54,13 @@
             opacity: 0;
             -webkit-transform: scale(.3);
         }
-
         50% {
             opacity: 1;
             -webkit-transform: scale(1.05);
         }
-
         70% {
             -webkit-transform: scale(.9);
         }
-
         100% {
              -webkit-transform: scale(1);
         }
@@ -75,16 +71,13 @@
             opacity: 0;
             transform: scale(.3);
         }
-
         50% {
             opacity: 1;
             transform: scale(1.05);
         }
-
         70% {
             transform: scale(.9);
         }
-
         100% {
             transform: scale(1);
         }
@@ -110,8 +103,8 @@
                 </div>
 
                 <div class="col-12" style="padding: 10%;">
-                    <div class="h3 fw-bold" style="color:#9f2064">LOGIN</div>
-                    <div class="small pb-4" style="color:#9f2064">access to manage the website.</div>
+                    <div class="h3 fw-bold text-magenta">LOGIN</div>
+                    <div class="small pb-4 text-magenta">access to manage the website.</div>
                     <!-- error message -->
                     {% if message %}
                     <p class="text-center text-danger"><small>{{ message }}</small></p>
@@ -135,7 +128,7 @@
 
         <div class="col-md-6 loginGraphics"
              style="background-image: url({% static 'haikuapp/images/magenta-bg.png' %});">
-            <div id="animation-demo" class="animated bounceIn">
+            <div id="animation-graphics" class="animated bounceIn">
                 <img src="{% static 'haikuapp/images/login_graphics2.png'%}" class="w-50">
                 <p class="text-light mt-2">Write in fewest possible words.</p>
             </div>

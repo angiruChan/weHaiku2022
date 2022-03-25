@@ -3,6 +3,44 @@
 {% load crispy_forms_tags %}
 {% block title %} Submit an Entry {% endblock title %}
 
+{% block custom_css %}
+<style>
+    #scrollAnimate {
+        position: relative;
+        line-height: 150px;
+        text-align: center;
+        padding-top:20%;
+    }
+    .animated {
+        -webkit-animation-duration: 4s;
+        animation-duration: 4s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+    }
+
+    @-webkit-keyframes tada {
+        0% {-webkit-transform: scale(1);}
+        10%, 20% {-webkit-transform: scale(0.9) rotate(-3deg);}
+        30%, 50%, 70%, 90% {-webkit-transform: scale(1.1) rotate(3deg);}
+        40%, 60%, 80% {-webkit-transform: scale(1.1) rotate(-3deg);}
+        100% {-webkit-transform: scale(1) rotate(0);}
+    }
+    @keyframes tada {
+        0% {transform: scale(1);}
+        10%, 20% {transform: scale(0.9) rotate(-3deg);}
+        30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);}
+        40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);}
+        100% {transform: scale(1) rotate(0);}
+    }
+    .tada {
+        -webkit-animation-name: tada;
+        animation-name: tada;
+    }
+
+</style>
+{% endblock custom_css %}
 
 {% block content %}
 {% include "haikuapp/navigation_bar.html" %}
@@ -46,7 +84,7 @@
                                                   placeholder="Line 3"></div>
                 <!-- submit button -->
                 <div class=" col-md-12 p-2 pt-4">
-                    <button type="submit" class="btn1">
+                    <button type="submit" class="btn1" data-bs-toggle="modal" data-bs-target="#modalConfirm">
                         <span class="text1"></span>
                         <span class="flip-front1">Submit</span>
                         <span class="flip-back1">Submit</span>
@@ -58,8 +96,38 @@
     </div>
 
     <div class="col-lg-4">
-        <img src="{% static 'haikuapp/images/submit_poster.png'%}" class="mx-auto w-100">
+        <img src="{% static 'haikuapp/images/magenta-scroll.png'%}" class="mx-auto w-100 animated tada"
+             id="scrollAnimate">
     </div>
 </div>
 
+<!--{% if modal_trigger %}-->
+<div class="modal" id="modalConfirm" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--{% endif %}-->
+
 {% endblock %}
+
+
+{% block custom_js %}
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#modalConfirm').modal('show');
+    });
+</script>
+{% endblock custom_js %}

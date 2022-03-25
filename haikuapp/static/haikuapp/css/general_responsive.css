@@ -5,8 +5,8 @@
     }
 }
 
-/*********************** RESPONSIVE FOR 700px ***********************/
-@media only screen and (max-width: 700px) {
+/*********************** RESPONSIVE FOR 768px ***********************/
+@media only screen and (max-width: 768px) {
     .slider__txt, .slider__subText {
         text-align: center;
         padding: 0;
@@ -20,5 +20,12 @@
     .sliderTextBox{
         width:50vw;
         background:rgba(0, 0, 0, 0.6);
+    }
 }
-}
+
+/*********************** RESPONSIVE FOR 900px ***********************/
+@media only screen and (max-width: 992px){
+    #scrollAnimate{
+        display: none;
+    }
+} 

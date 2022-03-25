@@ -59,28 +59,20 @@ def user_home(request):
 def submit_an_entry(request):
     link_active_entry = True
     visitor_access = True
+    modal_trigger = False
     form = EntryForm(request.POST)
 
     if request.method == "POST":
-        line1 = request.POST['line1']
-        line2 = request.POST['line2']
-        line3 = request.POST['line3']
-        myHaiku = line1 + " / " + line2 + " / " + line3
-
-        if form.is_valid():
-            # create entry
-            myEntry = form.save(commit=False)
-            myEntry.haiku_entry = myHaiku
-            myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
-            myEntry.save()
-        else:
-            return HttpResponse(form.errors)
+        submitEntryForm(request, form)
+        form = EntryForm()
+        modal_trigger = True
     else:
         form = EntryForm()
 
     return render(request, 'haikuapp/submit_an_entry.html', {
         "visitor_access": visitor_access,
         "link_active_entry": link_active_entry,
+        "modal_trigger": modal_trigger,
         "form": form,
     })
 
@@ -91,15 +83,34 @@ def user_haiku_entries(request):
         user_logged_in = True
         haiku = Entry.objects.all()
 
+        form = EntryForm(request.POST)
+
+        if request.method == "POST":
+            submitEntryForm(request, form)
+        else:
+            form = EntryForm()
+
         variables = {
             "haiku": haiku,
             "user_logged_in": user_logged_in,
+            "form": form,
         }
         return render(request, 'haikuapp/user_haiku_entries.html', variables)
     else:
         HttpResponse("access not granted")
 
 
-def access_denied(request):
-    return render(request, 'haikuapp/access_denied.html', {})
+def submitEntryForm(request, form):
+    line1 = request.POST['line1']
+    line2 = request.POST['line2']
+    line3 = request.POST['line3']
+    myHaiku = line1 + " / " + line2 + " / " + line3
 
+    if form.is_valid():
+        # create entry
+        myEntry = form.save(commit=False)
+        myEntry.haiku_entry = myHaiku
+        myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
+        myEntry.save()
+    else:
+        return HttpResponse(form.errors)

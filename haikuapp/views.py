@@ -59,21 +59,41 @@ def user_home(request):
 def submit_an_entry(request):
     link_active_entry = True
     visitor_access = True
-    modal_trigger = False
+    success = False
+    line1 = ''
+    line2 = ''
+    line3 = ''
     form = EntryForm(request.POST)
 
     if request.method == "POST":
-        submitEntryForm(request, form)
-        form = EntryForm()
-        modal_trigger = True
+        line1 = request.POST['line1']
+        line2 = request.POST['line2']
+        line3 = request.POST['line3']
+        myHaiku = haiku_entry_combine(line1, line2, line3)
+        if form.is_valid():
+            # create entry
+            myEntry = form.save(commit=False)
+            myEntry.haiku_entry = myHaiku
+            myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
+            myEntry.save()
+            form = EntryForm
+            success = True
+            line1 = ''
+            line2 = ''
+            line3 = ''
+        else:
+            form.errors
     else:
-        form = EntryForm()
+        form = EntryForm
 
     return render(request, 'haikuapp/submit_an_entry.html', {
         "visitor_access": visitor_access,
         "link_active_entry": link_active_entry,
-        "modal_trigger": modal_trigger,
         "form": form,
+        "success": success,
+        "line1": line1,
+        "line2": line2,
+        "line3": line3,
     })
 
 
@@ -81,36 +101,41 @@ def submit_an_entry(request):
 def user_haiku_entries(request):
     if request.user.is_authenticated:
         user_logged_in = True
-        haiku = Entry.objects.all()
-
+        haiku = Entry.objects.all().order_by('-date_created')
+        err_msg = ''
+        ss_msg = ''
         form = EntryForm(request.POST)
 
         if request.method == "POST":
-            submitEntryForm(request, form)
+            line1 = request.POST['line1']
+            line2 = request.POST['line2']
+            line3 = request.POST['line3']
+            myHaiku = haiku_entry_combine(line1, line2, line3)
+            if form.is_valid():
+                # create entry
+                myEntry = form.save(commit=False)
+                myEntry.haiku_entry = myHaiku
+                myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
+                myEntry.save()
+                form = EntryForm
+                ss_msg = "Successfully Added!"
+            else:
+                form.errors
+                err_msg = "There are errors in some fields."
         else:
-            form = EntryForm()
+            form = EntryForm
 
-        variables = {
+        return render(request, 'haikuapp/user_haiku_entries.html', {
             "haiku": haiku,
             "user_logged_in": user_logged_in,
             "form": form,
-        }
-        return render(request, 'haikuapp/user_haiku_entries.html', variables)
+            "ss_msg": ss_msg,
+            "err_msg": err_msg,
+        })
     else:
         HttpResponse("access not granted")
 
 
-def submitEntryForm(request, form):
-    line1 = request.POST['line1']
-    line2 = request.POST['line2']
-    line3 = request.POST['line3']
+def haiku_entry_combine(line1, line2, line3):
     myHaiku = line1 + " / " + line2 + " / " + line3
-
-    if form.is_valid():
-        # create entry
-        myEntry = form.save(commit=False)
-        myEntry.haiku_entry = myHaiku
-        myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
-        myEntry.save()
-    else:
-        return HttpResponse(form.errors)
+    return myHaiku

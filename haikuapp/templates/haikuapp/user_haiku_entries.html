@@ -26,6 +26,7 @@
 {% include "haikuapp/navigation_bar.html" %}
 
 <div class="w-75 mx-auto container2">
+
     <div class="d-sm-flex pb-3 justify-content-between">
         <div class="h3">HAIKU ENTRIES</div>
         <!-- Button trigger modal -->
@@ -34,6 +35,16 @@
             <span style="padding-left: 5px;">Add Entry</span>
         </div>
     </div>
+
+    <!-- Alert Messages -->
+    {% if ss_msg %}
+    <div class="alert alert-success alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+        {{ ss_msg }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+    {% elif err_msg %}
+    <div class="alert alert-danger alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+        {{ err_msg }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+    {% endif %}
+
 
     <!-- Calling all haiku entries -->
     <div class="list-group">

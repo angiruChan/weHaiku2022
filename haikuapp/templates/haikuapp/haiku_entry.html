@@ -1,0 +1,84 @@
+{% extends "haikuapp/base.html" %}
+{% load static %}
+{% block title %} Manager Options | Haiku Entries {% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block custom_css %}
+<style>
+    .container2{
+        padding: 4% 0% 4% 0%;
+    }
+    .iconSize{
+        width: 10px;
+    }
+    .list-group-item{
+        border: 1px solid #bababa;
+    }
+    .mr-10{
+        margin-right: 10px;
+    }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+
+<!-- Haiku Entry Modal -->
+<div class="w-75 mx-auto container2">
+    <div class="h3">ADD HAIKU ENTRY</div>
+
+    <!-- Alert Messages -->
+    {% if ss_msg %}
+    <div class="alert alert-success alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+        {{ ss_msg }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+    {% elif err_msg %}
+    <div class="alert alert-danger alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+        {{ err_msg }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+    {% endif %}
+
+
+    <form method="POST">
+        {% csrf_token %} <!-- cross-site request forgery -->
+        <div class="row p-4">
+            <div class="col-md-6 p-2">
+                <label class="form-label">Full Name<span class="text-danger">*</span></label>
+                {{ form.full_name|as_crispy_field }}
+            </div>
+            <div class="col-md-6 p-2">
+                <label class="form-label">Email Address<span class="text-danger">*</span></label>
+                {{ form.email|as_crispy_field }}
+            </div>
+            <div class="col-md-6 p-2">
+                <label class="form-label">Haiku Title</label>
+                {{ form.haiku_title|as_crispy_field }}
+            </div>
+            <div class="col-md-6 p-2">
+                <label class="form-label">Haiku Theme<span class="text-danger">*</span></label>
+                {{ form.haiku_theme|as_crispy_field }}
+            </div>
+            <div class="col-md-6 p-2">
+                <label class="form-label">Author Alias<span class="text-danger">*</span></label>
+                {{ form.author_alias|as_crispy_field }}
+            </div>
+
+            <div class="col-md-6 p-2">
+                <label class="form-label">Entry Status<span class="text-danger">*</span></label>
+                {{ form.entry_status|as_crispy_field }}
+            </div>
+
+            <span class="p-1 pt-2">Haiku Entry</span>
+            <div class="col-lg-4 p-2"><input type="text" class="form-control" id="line1" name="line1"
+                                             value="{{ line1 }}" required placeholder="Line 1"></div>
+            <div class="col-lg-4 p-2"><input type="text" class="form-control" id="line2" name="line2"
+                                             value="{{ line2 }}" required placeholder="Line 2"></div>
+            <div class="col-lg-4 p-2"><input type="text" class="form-control" id="line3" name="line3"
+                                             value="{{ line3 }}" required placeholder="Line 3"></div>
+            <div class="d-flex flex-row-reverse pt-3">
+                <a class="btn btn-grey" href="/user_haiku_entries">Back</a>
+                <button type="submit" class="btn btn-magenta mr-10">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

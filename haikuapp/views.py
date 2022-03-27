@@ -63,9 +63,10 @@ def submit_an_entry(request):
     line1 = ''
     line2 = ''
     line3 = ''
-    form = EntryForm(request.POST)
+    default_status = get_object_or_404(Entry_Status, entry_status="pending")
 
     if request.method == "POST":
+        form = EntryForm(request.POST)
         line1 = request.POST['line1']
         line2 = request.POST['line2']
         line3 = request.POST['line3']
@@ -74,9 +75,9 @@ def submit_an_entry(request):
             # create entry
             myEntry = form.save(commit=False)
             myEntry.haiku_entry = myHaiku
-            myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
+            myEntry.entry_status = default_status
             myEntry.save()
-            form = EntryForm
+            form = EntryForm()
             success = True
             line1 = ''
             line2 = ''
@@ -84,7 +85,7 @@ def submit_an_entry(request):
         else:
             form.errors
     else:
-        form = EntryForm
+        form = EntryForm()
 
     return render(request, 'haikuapp/submit_an_entry.html', {
         "visitor_access": visitor_access,
@@ -102,35 +103,61 @@ def user_haiku_entries(request):
     if request.user.is_authenticated:
         user_logged_in = True
         haiku = Entry.objects.all().order_by('-date_created')
+        return render(request, 'haikuapp/user_haiku_entries.html', {
+            "haiku": haiku,
+            "user_logged_in": user_logged_in,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def haiku_entries(request, value):
+    if request.user.is_authenticated:
+        user_logged_in = True
         err_msg = ''
         ss_msg = ''
-        form = EntryForm(request.POST)
+        line1 = ''
+        line2 = ''
+        line3 = ''
+
+        if value == 'add':
+            title = 'Add Haiku Entry'
+        else:
+            title = 'Update Haiku Entry'
 
         if request.method == "POST":
+            form = EntryForm(request.POST)
             line1 = request.POST['line1']
             line2 = request.POST['line2']
             line3 = request.POST['line3']
             myHaiku = haiku_entry_combine(line1, line2, line3)
+
             if form.is_valid():
                 # create entry
                 myEntry = form.save(commit=False)
                 myEntry.haiku_entry = myHaiku
-                myEntry.entry_status = get_object_or_404(Entry_Status, entry_status="pending")
                 myEntry.save()
-                form = EntryForm
-                ss_msg = "Successfully Added!"
+                form = EntryForm()
+                ss_msg = "Successfully Updated!"
+                line1 = ''
+                line2 = ''
+                line3 = ''
             else:
                 form.errors
                 err_msg = "There are errors in some fields."
         else:
-            form = EntryForm
+            form = EntryForm()
 
-        return render(request, 'haikuapp/user_haiku_entries.html', {
-            "haiku": haiku,
+        return render(request, 'haikuapp/haiku_entry.html', {
             "user_logged_in": user_logged_in,
             "form": form,
             "ss_msg": ss_msg,
             "err_msg": err_msg,
+            "line1": line1,
+            "line2": line2,
+            "line3": line3,
+            "title": title,
         })
     else:
         HttpResponse("access not granted")

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .encryption_util import encrypt
 
 
 class Category(models.Model):
@@ -14,6 +15,9 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Categories"
+
+    def encrypt_category(self):
+        return encrypt(self.id)
 
 
 class Haiku(models.Model):
@@ -41,6 +45,9 @@ class Haiku(models.Model):
 
     class Meta:
         verbose_name_plural = "Haiku"
+
+    def encrypt_haiku(self):
+        return encrypt(self.id)
 
 
 class Comment(models.Model):
@@ -77,7 +84,7 @@ class Entry_Status(models.Model):
 class Entry(models.Model):
 
     THEMES = {
-        ('', '- Select -'),
+        ('', '---------'),
         ('human nature', 'human nature'),
         ('nature and seasons', 'nature and seasons'),
         ('others', 'others'),
@@ -98,6 +105,10 @@ class Entry(models.Model):
 
     class Meta:
         verbose_name_plural = "Entries"
+
+    def encrypt_entry(self):
+        return encrypt(self.id)
+
 
 
 

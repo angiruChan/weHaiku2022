@@ -21,7 +21,7 @@ class AuthForm(AuthenticationForm):
 # submit an entry form
 class EntryForm(forms.ModelForm):
     THEMES = {
-        ('', '- Select -'),
+        ('', '---------'),
         ('human nature', 'human nature'),
         ('nature and seasons', 'nature and seasons'),
         ('others', 'others'),
@@ -38,10 +38,12 @@ class EntryForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 250}))
     haiku_theme = forms.ChoiceField(choices=sorted(THEMES), label="", initial='',
                                     widget=forms.Select(attrs={'class': 'form-select'}), required=True)
+    entry_status = forms.ModelChoiceField(queryset=Entry_Status.objects.all(), label="",
+                                          widget=forms.Select(attrs={'class': 'form-select'}), required=True)
 
     class Meta:
         model = Entry
-        fields = ("full_name", "email", "haiku_title", "author_alias", "haiku_theme")
+        fields = ("full_name", "email", "haiku_title", "author_alias", "haiku_theme", "entry_status")
 
 
 class EntryStatusForm(forms.ModelForm):

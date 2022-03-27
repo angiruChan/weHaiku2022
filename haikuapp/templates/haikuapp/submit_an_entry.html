@@ -83,6 +83,12 @@
                     <label class="form-label">Author Alias<span class="text-danger">*</span></label>
                     {{ form.author_alias|as_crispy_field }}
                 </div>
+
+                <div class="col-md-12 p-2" style="display: none;">
+                    <label class="form-label">Entry Status<span class="text-danger">*</span></label>
+                    {{ form.entry_status|as_crispy_field }}
+                </div>
+
                 <span class="p-1 pt-2">Haiku Entry</span>
                 <div class=" col-md-4 p-2">
                     <input type="text" class="form-control" id="line1" name="line1" required value="{{ line1 }}"

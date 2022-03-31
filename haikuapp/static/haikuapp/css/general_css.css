@@ -69,9 +69,30 @@ body{ font-family: 'Poppins', sans-serif; }
     color: white;
 }
 
+.bg-pastel-red{
+    color: white;
+    background-color: #F4B9B8;
+}
 
+.bg-pastel-green{
+    color: white;
+    background-color: #77dd77;
+}
 
+.bg-pastel-yellow{
+    color: white;
+    background-color: #FFF4BD;
+}
 
+.bg-pastel-purple{
+    color: white;
+    background-color: #887BB0;
+}
+
+.bg-pastel-mint{
+    color: white;
+    background-color: #85D2D0;
+}
 
 /*********************** BUTTON ***********************/
 .primaryButton{

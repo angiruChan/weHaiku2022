@@ -10,5 +10,8 @@ urlpatterns = [
     path("user_home/", views.user_home, name="user_home"),
     path("submit_an_entry/", views.submit_an_entry, name="submit_an_entry"),
     path("user_haiku_entries/", views.user_haiku_entries, name="user_haiku_entries"),
-    path("haiku_entries/<str:value>", views.haiku_entries, name="haiku_entries"),
+    path("add_haiku_entries/", views.add_haiku_entries, name="add_haiku_entries"),
+    path("update_haiku_entries/<str:h_id>/", views.update_haiku_entries, name="update_haiku_entries"),
+    path("delete_haiku_entry/", views.delete_haiku_entry, name="delete_haiku_entry"),
+    path("user_categories/", views.user_categories, name="user_categories"),
 ]

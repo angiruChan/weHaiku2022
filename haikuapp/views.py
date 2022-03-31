@@ -112,19 +112,14 @@ def user_haiku_entries(request):
 
 
 @login_required(login_url='/')
-def haiku_entries(request, value):
+def add_haiku_entries(request):
     if request.user.is_authenticated:
+        title = 'Add Haiku Entry'
         user_logged_in = True
-        err_msg = ''
-        ss_msg = ''
         line1 = ''
         line2 = ''
         line3 = ''
-
-        if value == 'add':
-            title = 'Add Haiku Entry'
-        else:
-            title = 'Update Haiku Entry'
+        success_msg = ''
 
         if request.method == "POST":
             form = EntryForm(request.POST)
@@ -139,30 +134,91 @@ def haiku_entries(request, value):
                 myEntry.haiku_entry = myHaiku
                 myEntry.save()
                 form = EntryForm()
-                ss_msg = "Successfully Updated!"
+                success_msg = "Successfully Added!"
                 line1 = ''
                 line2 = ''
                 line3 = ''
             else:
                 form.errors
-                err_msg = "There are errors in some fields."
         else:
             form = EntryForm()
 
         return render(request, 'haikuapp/haiku_entry.html', {
             "user_logged_in": user_logged_in,
             "form": form,
-            "ss_msg": ss_msg,
-            "err_msg": err_msg,
             "line1": line1,
             "line2": line2,
             "line3": line3,
             "title": title,
+            "success_msg": success_msg,
         })
     else:
         HttpResponse("access not granted")
 
 
+@login_required(login_url='/')
+def update_haiku_entries(request, h_id):
+    title = 'Update Haiku Entry'
+    entry = get_object_or_404(Entry, pk=decrypt(h_id))
+    user_logged_in = True
+    line1 = entry.haiku_entry.split("/")[0]
+    line2 = entry.haiku_entry.split("/")[1]
+    line3 = entry.haiku_entry.split("/")[2]
+    success_msg = ''
+
+    if request.method == "POST":
+        form = EntryForm(request.POST, instance=entry)
+        line1 = request.POST['line1']
+        line2 = request.POST['line2']
+        line3 = request.POST['line3']
+        if form.is_valid():
+            myEntry = form.save(commit=False)
+            myEntry.haiku_entry = haiku_entry_combine(line1, line2, line3)
+            myEntry.save()
+            success_msg = "Successfully Updated"
+        else:
+            return HttpResponse(form.errors.values())
+    else:
+        form = EntryForm(instance=entry)
+
+    return render(request, 'haikuapp/haiku_entry.html',{
+        "user_logged_in": user_logged_in,
+        "form": form,
+        "line1": line1,
+        "line2": line2,
+        "line3": line3,
+        "title": title,
+        "success_msg": success_msg,
+    })
+
+
+@login_required(login_url='/')
+def delete_haiku_entry(request):
+    if request.method == "POST":
+        confirm_delete = request.POST['confirm_delete']
+        print(confirm_delete)
+        e_haiku = get_object_or_404(Entry, pk=decrypt(confirm_delete))
+        e_haiku.delete()
+        return redirect('/user_haiku_entries')
+    else:
+        pass
+
+
 def haiku_entry_combine(line1, line2, line3):
     myHaiku = line1 + " / " + line2 + " / " + line3
     return myHaiku
+
+
+@login_required(login_url='/')
+def user_categories(request):
+    if request.user.is_authenticated:
+        user_logged_in = True
+        categories = Category.objects.all().order_by('-date_created')
+        return render(request, 'haikuapp/user_categories.html', {
+            "categories": categories,
+            "user_logged_in": user_logged_in,
+        })
+    else:
+        HttpResponse("access not granted")
+
+

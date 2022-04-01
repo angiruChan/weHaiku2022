@@ -23,6 +23,17 @@ body{ font-family: 'Poppins', sans-serif; }
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+.box{
+    box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
+    -webkit-box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
+    -moz-box-shadow: -4px -1px 12px -1px rgba(0,0,0,0.33);
+}
+.box2{
+    box-shadow: rgba(163, 163, 163, 0.8) -1px 0px 10px -3px;
+    -webkit-box-shadow: rgba(163, 163, 163, 0.8) -1px 0px 10px -3px;
+    -moz-box-shadow: rgba(163, 163, 163, 0.8) -1px 0px 10px -3px;
+}
+
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     background-color:#e3afbc;
 }
@@ -38,7 +49,6 @@ body{ font-family: 'Poppins', sans-serif; }
 .bg-yellow {
     background-color: #fcb045;
 }
-
 .btn-outline-magenta{
     border: 1px solid #9f2064;
     background-color: #e3e2df;
@@ -68,32 +78,48 @@ body{ font-family: 'Poppins', sans-serif; }
     background-color: #494949;
     color: white;
 }
-
 .bg-pastel-red{
     color: white;
     background-color: #F4B9B8;
 }
-
 .bg-pastel-green{
     color: white;
     background-color: #77dd77;
 }
-
 .bg-pastel-yellow{
     color: white;
     background-color: #FFF4BD;
 }
-
 .bg-pastel-purple{
     color: white;
     background-color: #887BB0;
 }
-
 .bg-pastel-mint{
     color: white;
     background-color: #85D2D0;
 }
-
+a.add_button, .editIcon, .deleteIcon{
+    transition: transform .2s ease;
+}
+.editIcon, .deleteIcon{
+    width:16px;
+}
+.categCard{
+    border: 1px solid black;
+    width: 23%;
+}
+a.add_button:hover, .editIcon:hover, .deleteIcon:hover{
+    transform: scale(1.1);
+    filter: drop-shadow(5px 2px 3px #cccbcb);
+}
+.hrLine {
+    margin:0;
+    padding: 0;
+    border-bottom: 3px solid #9f2064;
+}
+.pr-6{
+    padding-right: 6px;
+}
 /*********************** BUTTON ***********************/
 .primaryButton{
     margin-top: 3%;

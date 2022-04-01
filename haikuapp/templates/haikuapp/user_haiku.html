@@ -1,19 +1,29 @@
 {% extends "haikuapp/base.html" %}
 {% load static %}
-{% block title %} Manager Options | Haiku Entries {% endblock title %}
+{% block title %} Manager Options | Haiku {% endblock title %}
 
 
 {% block custom_css %}
 <style>
+    .haikuImg {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    .haikuCard{
+        max-width: 250px;
+    }
     .container2{
         padding: 4% 0% 4% 0%;
     }
-
-
     @media only screen and (max-width: 768px) {
         .categCard{
             border: 1px solid black;
             width: 100%;
+        }
+        .haikuImg{
+            height: 100px;
         }
     }
 </style>
@@ -23,11 +33,13 @@
 {% block content %}
 {% include "haikuapp/navigation_bar.html" %}
 
-<div class="container mx-auto row pt-4">
-    <div class="col-lg-3 bg-light p-4">
+<div class="w-75 mx-auto row container2">
+    <div class="col-lg-4">
         {% include 'haikuapp/category_section.html' %}
     </div>
-    <div class="col-lg-9 bg-warning">..</div>
+    <div class="col-lg-8">
+        {% include 'haikuapp/haiku_section.html' %}
+    </div>
 </div>
 
 {% endblock %}

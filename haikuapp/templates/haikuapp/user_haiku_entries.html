@@ -14,7 +14,6 @@
     .list-group-item{
         border: 1px solid #bababa;
     }
-
 </style>
 {% endblock custom_css %}
 
@@ -41,26 +40,23 @@
                 <div class="d-flex w-100 justify-content-between">
                     <div class="mb-1">
                         {% if h.entry_status.entry_status == 'approved' %}
-                        <span class="badge bg-pastel-green align-middle small">{{ h.entry_status }}</span>
+                        <span class="badge bg-pastel-green align-bottom small">{{ h.entry_status }}</span>
                         {% elif h.entry_status.entry_status == 'rejected' %}
-                        <span class="badge bg-pastel-red align-middle small">{{ h.entry_status }}</span>
+                        <span class="badge bg-pastel-red align-bottom small">{{ h.entry_status }}</span>
                         {% elif h.entry_status.entry_status == 'featured' %}
-                        <span class="badge bg-pastel-mint align-middle small">{{ h.entry_status }}</span>
+                        <span class="badge bg-pastel-mint align-bottom small">{{ h.entry_status }}</span>
                         {% else %}
-                        <span class="badge bg-pastel-purple align-middle small">{{ h.entry_status }}</span>
+                        <span class="badge bg-pastel-purple align-bottom small">{{ h.entry_status }}</span>
                         {% endif %}
 
                     </div>
-                    <!-- dropdown menu -->
-                    <div class="btn-group" title="more options">
-                        <p type="button" class="" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{% static 'haikuapp/images/more.png' %}" width="20px"></p>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/update_haiku_entries/{{ h.encrypt_entry }}">Edit</a>
-                            </li>
-                            <li><a class="dropdown-item" onclick="confirmDelete('{{ h.encrypt_entry }}')"
-                                   type="button">Delete</a></li>
-                        </ul>
+
+                    <div class="p-2">
+                        <a href="/update_haiku_entries/{{ h.encrypt_entry }}"><img
+                                src="{% static 'haikuapp/images/edit.png' %}" class="editIcon" title="edit"></a>
+                        <span class="p-1" style="color:#cccbcb;">|</span>
+                        <a onclick="confirmDelete('{{ h.encrypt_entry }}')"><img
+                                src="{% static 'haikuapp/images/trash.png' %}" class="deleteIcon" title="delete"></a>
                     </div>
                 </div>
 
@@ -94,11 +90,8 @@
             <header class="bg-magenta p-4">
                 <span class="text-light h5 ">Delete Confirmation</span>
                 <button type="button" onclick="exitModal()"
-                        class="btn btn-outline-light btn-sm float-end">
-                    &times;
-                </button>
+                        class="btn btn-outline-light btn-sm float-end">&times;</button>
             </header>
-
             <div class="p-4 w-100 text-center">
                 <img src="{% static 'haikuapp/images/frown-face.png'%}" class="w-25">
                 <p>Are you sure you want to delete this entry?</p>

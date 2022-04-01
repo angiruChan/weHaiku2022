@@ -4,7 +4,7 @@ from .encryption_util import encrypt
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True, blank=True)
@@ -32,6 +32,7 @@ class Haiku(models.Model):
     author = models.CharField(max_length=150, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     haiku_status = models.CharField(max_length=45)
+    is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True, blank=True)
     # foreign keys
@@ -61,6 +62,7 @@ class Comment(models.Model):
     comment = models.CharField(max_length=500)
     rating = models.FloatField()
     comment_status = models.CharField(choices=COMMENT_STATUS_CHOICES, max_length=45)
+    is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True, blank=True)
     # foreign keys
@@ -96,6 +98,7 @@ class Entry(models.Model):
     haiku_entry = models.CharField(max_length=500)
     author_alias = models.CharField(max_length=100)
     haiku_theme = models.CharField(choices=sorted(THEMES), max_length=100)
+    is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     # foreign keys
     entry_status = models.ForeignKey(Entry_Status, on_delete=models.CASCADE)

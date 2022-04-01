@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from .models import Entry, Category, Haiku, Comment, Entry_Status, Entry
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -50,3 +50,13 @@ class EntryStatusForm(forms.ModelForm):
     class Meta:
         model = Entry_Status
         fields = ("entry_status",)
+
+
+class CategoryForm(forms.ModelForm):
+    # custom fields
+    name = forms.CharField(label="", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 30}))
+
+    class Meta:
+        model = Category
+        fields = ("name",)

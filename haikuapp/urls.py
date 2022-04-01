@@ -13,5 +13,8 @@ urlpatterns = [
     path("add_haiku_entries/", views.add_haiku_entries, name="add_haiku_entries"),
     path("update_haiku_entries/<str:h_id>/", views.update_haiku_entries, name="update_haiku_entries"),
     path("delete_haiku_entry/", views.delete_haiku_entry, name="delete_haiku_entry"),
-    path("user_categories/", views.user_categories, name="user_categories"),
+    path("user_haiku/", views.user_haiku, name="user_haiku"),
+    path("add_category/", views.add_category, name="add_category"),
+    path("update_category/<str:c_id>/", views.update_category, name="update_category"),
+    path("delete_category/", views.delete_category, name="delete_category"),
 ]

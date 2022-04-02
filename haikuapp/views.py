@@ -214,7 +214,7 @@ def user_haiku(request):
     if request.user.is_authenticated:
         user_logged_in = True
         categories = Category.objects.filter(is_deleted=False).order_by('-date_created')
-        haiku = Haiku.objects.filter(is_deleted=False).order_by('-date_created')
+        haiku = Haiku.objects.filter(is_deleted=False, category__is_deleted=False).order_by('-date_created')
         return render(request, 'haikuapp/user_haiku.html', {
             "categories": categories,
             "haiku": haiku,
@@ -236,7 +236,6 @@ def add_category(request):
             if form.is_valid():
                 # create category
                 myCateg = form.save(commit=False)
-                myCateg.is_deleted = False
                 myCateg.user = request.user
                 myCateg.save()
                 form = CategoryForm
@@ -295,3 +294,72 @@ def delete_category(request):
     else:
         pass
 
+
+@login_required(login_url='/')
+def add_haiku(request):
+    if request.user.is_authenticated:
+        title = 'Add Haiku'
+        user_logged_in = True
+        success_msg = ''
+
+        if request.method == "POST":
+            form = HaikuForm(request.POST, request.FILES)
+            if form.is_valid():
+                # create haiku
+                form.save()
+                form = HaikuForm
+                success_msg = "Successfully Added!"
+            else:
+                form.errors
+        else:
+            form = HaikuForm
+
+        return render(request, 'haikuapp/haiku_form.html', {
+            "user_logged_in": user_logged_in,
+            "form": form,
+            "title": title,
+            "success_msg": success_msg,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def update_haiku(request, h_id):
+    if request.user.is_authenticated:
+        title = 'Update Haiku'
+        user_logged_in = True
+        success_msg = ''
+        haiku = get_object_or_404(Haiku, pk=decrypt(h_id))
+
+        if request.method == "POST":
+            form = HaikuForm(request.POST, request.FILES, instance=haiku)
+            if form.is_valid():
+                form.save()
+                success_msg = "Successfully Updated!"
+            else:
+                form.errors
+        else:
+            form = HaikuForm(instance=haiku)
+
+        return render(request, 'haikuapp/haiku_form.html', {
+            "user_logged_in": user_logged_in,
+            "form": form,
+            "title": title,
+            "success_msg": success_msg,
+            "haiku": haiku,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def delete_haiku(request):
+    if request.method == "POST":
+        form = HaikuForm(instance=get_object_or_404(Haiku, pk=decrypt(request.POST['confirm_del_haiku'])))
+        myHaiku = form.save(commit=False)
+        myHaiku.is_deleted = True
+        myHaiku.save()
+        return redirect('/user_haiku')
+    else:
+        pass

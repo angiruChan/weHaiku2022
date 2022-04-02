@@ -16,7 +16,25 @@
     }
     .container2{
         padding: 4% 0% 4% 0%;
+        width: 75%;
     }
+    .scrollCon{
+        overflow-y: auto;
+        max-height: 750px;
+    }
+    .imageModalPreview{
+        width: 40%;
+    }
+    #myImgPreview{
+        height: 500px;
+    }
+
+    @media only screen and (max-width: 1300px){
+        #myImgPreview{
+            height: 300px;
+        }
+    }
+
     @media only screen and (max-width: 768px) {
         .categCard{
             border: 1px solid black;
@@ -24,6 +42,16 @@
         }
         .haikuImg{
             height: 100px;
+        }
+        .scrollCon{
+            height: 400px;
+        }
+        .container2{
+            width: 100%;
+        }
+        #myImgPreview{
+            width: 100%;
+            height: 100%;
         }
     }
 </style>
@@ -33,7 +61,7 @@
 {% block content %}
 {% include "haikuapp/navigation_bar.html" %}
 
-<div class="w-75 mx-auto row container2">
+<div class="mx-auto row container2">
     <div class="col-lg-4">
         {% include 'haikuapp/category_section.html' %}
     </div>

@@ -1,0 +1,93 @@
+{% extends "haikuapp/base.html" %}
+{% load static %}
+{% block title %} {{ title }} {% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block custom_css %}
+<style>
+    body{
+        background-image: url({% static 'haikuapp/images/magenta-bg.png' %});
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .outerCon{
+        padding-top: 4%;
+    }
+    .container2{
+        padding: 3%;
+        width: 40%;
+    }
+    .iconSize{
+        width: 10px;
+    }
+    .list-group-item{
+        border: 1px solid #bababa;
+    }
+    .mr-10{
+        margin-right: 10px;
+    }
+
+    @media only screen and (max-width: 1300px){
+        .outerCon{
+            padding-top: 10%;
+            padding-bottom: 20%;
+        }
+        .container2{
+            width: 80%;
+        }
+    }
+
+
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+
+<div class="outerCon">
+    <div class="w-sm-100 mx-auto container2 card">
+        <div class="h3">{{ title }}</div>
+
+        {% if success_msg %}
+        <div class="alert alert-success alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+            <strong>{{ success_msg }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %} <!-- cross-site request forgery -->
+            <div class="row p-4">
+                <div class="col-7 p-2">
+                    <label class="form-label">Author<span class="text-danger">*</span></label>
+                    {{ form.author|as_crispy_field }}
+                </div>
+                <div class="col-sm-5 p-2">
+                    <label class="form-label">Title</label>
+                    {{ form.title|as_crispy_field }}
+                </div>
+                <div class="col-sm-6 p-2">
+                    <label class="form-label">Haiku Status<span class="text-danger">*</span></label>
+                    {{ form.haiku_status|as_crispy_field }}
+                </div>
+                <div class="col-sm-6 p-2">
+                    <label class="form-label">Category<span class="text-danger">*</span></label>
+                    {{ form.category|as_crispy_field }}
+                </div>
+                <div class="col-sm-6 p-2">
+                    <label class="form-label">Image<span class="text-danger">*</span></label>
+                    {{ form.image|as_crispy_field }}
+                </div>
+                {% if haiku.image %} <a href="{{haiku.image.url}}" class="col-12" target="_blank">{{ haiku.image }}</a>{% endif %}
+            </div>
+            <div class="d-flex flex-row-reverse pt-3">
+                <a class="btn btn-grey" href="/user_haiku">Back</a>
+                <button type="submit" class="btn btn-magenta mr-10">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

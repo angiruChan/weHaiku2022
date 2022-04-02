@@ -60,3 +60,28 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ("name",)
+
+
+class HaikuForm(forms.ModelForm):
+    COMMENT_STATUS_CHOICES = (
+        ('', '---------'),
+        ('hide', 'hide'),
+        ('show', 'show'),
+        ('featured', 'featured'),
+    )
+
+    # custom fields
+    author = forms.CharField(label="", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 100}))
+    title = forms.CharField(label="", required=False, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 50}))
+    haiku_status = forms.ChoiceField(choices=sorted(COMMENT_STATUS_CHOICES), label="", initial='',
+                                     widget=forms.Select(attrs={'class': 'form-select'}), required=True)
+    image = forms.ImageField(label='', required=True, error_messages={'invalid': "Image files only"},
+                             widget=forms.FileInput)
+    category = forms.ModelChoiceField(queryset=Category.objects.filter(is_deleted=False), label="",
+                                      widget=forms.Select(attrs={'class': 'form-select'}), required=True)
+
+    class Meta:
+        model = Haiku
+        fields = ("author", "title", "haiku_status", "image", "category")

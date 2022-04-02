@@ -17,4 +17,7 @@ urlpatterns = [
     path("add_category/", views.add_category, name="add_category"),
     path("update_category/<str:c_id>/", views.update_category, name="update_category"),
     path("delete_category/", views.delete_category, name="delete_category"),
+    path("add_haiku/", views.add_haiku, name="add_haiku"),
+    path("update_haiku/<str:h_id>/", views.update_haiku, name="update_haiku"),
+    path("delete_haiku/", views.delete_haiku, name="delete_haiku"),
 ]

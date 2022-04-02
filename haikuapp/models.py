@@ -23,6 +23,7 @@ class Category(models.Model):
 class Haiku(models.Model):
 
     COMMENT_STATUS_CHOICES = (
+        ('', '---------'),
         ('hide', 'hide'),
         ('show', 'show'),
         ('featured', 'featured'),
@@ -31,7 +32,7 @@ class Haiku(models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     author = models.CharField(max_length=150, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
-    haiku_status = models.CharField(max_length=45)
+    haiku_status = models.CharField(choices=sorted(COMMENT_STATUS_CHOICES), max_length=45)
     is_deleted = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, blank=True)
     date_updated = models.DateTimeField(auto_now=True, blank=True)
@@ -53,6 +54,7 @@ class Haiku(models.Model):
 
 class Comment(models.Model):
     COMMENT_STATUS_CHOICES = (
+        ('', '---------'),
         ('hide', 'hide'),
         ('show', 'show'),
     )

@@ -124,14 +124,14 @@ a.add_button:hover, .editIcon:hover, .deleteIcon:hover{
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    width: 255px;
+    width: 400px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     box-shadow: 9px 8px 0px -5px rgba(159,32,100,0.3);
     -webkit-box-shadow: 9px 8px 0px -5px rgba(159,32,100,0.3);
     -moz-box-shadow: 9px 8px 0px -5px rgba(159,32,100,0.3);
-    }
+}
 .item-zoom img {
     vertical-align: top;
     max-width: 100%;

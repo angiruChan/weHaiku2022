@@ -120,6 +120,32 @@ a.add_button:hover, .editIcon:hover, .deleteIcon:hover{
 .pr-6{
     padding-right: 6px;
 }
+.item-zoom {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 255px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 9px 8px 0px -5px rgba(159,32,100,0.3);
+    -webkit-box-shadow: 9px 8px 0px -5px rgba(159,32,100,0.3);
+    -moz-box-shadow: 9px 8px 0px -5px rgba(159,32,100,0.3);
+    }
+.item-zoom img {
+    vertical-align: top;
+    max-width: 100%;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.item-zoom:hover img {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
 /*********************** BUTTON ***********************/
 .primaryButton{
     margin-top: 3%;

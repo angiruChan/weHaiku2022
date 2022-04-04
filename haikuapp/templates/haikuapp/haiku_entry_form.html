@@ -45,13 +45,15 @@
     <div class="w-75 w-sm-100 mx-auto container2 card">
         <div class="h3">{{ title }}</div>
 
-            {% if success_msg %}
-            <div class="alert alert-success alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
-                <strong>{{ success_msg }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endif %}
+        <!-- Success Messages -->
+        {% if success_msg %}
+        <div class="alert alert-success alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+            <strong>{{ success_msg }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
 
+        <!-- Haiku Entry Form -->
         <form method="POST">
             {% csrf_token %} <!-- cross-site request forgery -->
             <div class="row p-4">

@@ -60,11 +60,11 @@
                 <div class="col-12" style="padding: 10%;">
                     <div class="h3 fw-bold text-magenta">LOGIN</div>
                     <div class="small pb-4 text-magenta">access to manage the website.</div>
-                    <!-- error message -->
+                    <!-- Error Message -->
                     {% if message %}
                     <p class="text-center text-danger"><small>{{ message }}</small></p>
                     {% endif %}
-                    <!-- login form -->
+                    <!-- Login Form -->
                     <form method="POST" class="post-form">
                         {% csrf_token %} <!-- cross-site request forgery -->
                         <div class="formItems">
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- Login Graphics Corner -->
         <div class="col-md-6 loginGraphics"
              style="background-image: url({% static 'haikuapp/images/magenta-bg.png' %});">
             <div id="animation-graphics" class="animated bounceIn">

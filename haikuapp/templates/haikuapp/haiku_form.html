@@ -51,6 +51,7 @@
     <div class="w-sm-100 mx-auto container2 card">
         <div class="h3">{{ title }}</div>
 
+        <!-- Success Messages -->
         {% if success_msg %}
         <div class="alert alert-success alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
             <strong>{{ success_msg }}</strong>
@@ -58,6 +59,7 @@
         </div>
         {% endif %}
 
+        <!-- Haiku Form -->
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %} <!-- cross-site request forgery -->
             <div class="row p-4">

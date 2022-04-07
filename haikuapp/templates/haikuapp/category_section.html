@@ -14,9 +14,11 @@
         <div class="d-flex justify-content-between">
             <div class="p-2">{{ c.name }}</div>
             <div class="p-2">
+                <!-- Update Button -->
                 <a href="/update_category/{{ c.encrypt_category }}">
                     <img src="{% static 'haikuapp/images/edit.png' %}" class="editIcon" title="edit"></a>
                 <span class="p-1" style="color:#cccbcb;">|</span>
+                <!-- Delete Button -->
                 <a onclick="confirmDelete_Categ('{{ c.encrypt_category }}')"><img
                         src="{% static 'haikuapp/images/trash.png' %}" class="deleteIcon" title="delete"></a>
             </div>

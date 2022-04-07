@@ -57,7 +57,6 @@ def user_home(request):
 
 
 def submit_an_entry(request):
-    link_active_entry = True
     visitor_access = True
     success = False
     line1 = ''
@@ -66,10 +65,11 @@ def submit_an_entry(request):
     default_status = get_object_or_404(Entry_Status, entry_status="pending")
 
     if request.method == "POST":
-        form = EntryForm(request.POST)
+        print("here")
         line1 = request.POST['line1']
         line2 = request.POST['line2']
         line3 = request.POST['line3']
+        form = SubmitEntryForm(request.POST)
         myHaiku = haiku_entry_combine(line1, line2, line3)
         if form.is_valid():
             # create entry
@@ -77,7 +77,7 @@ def submit_an_entry(request):
             myEntry.haiku_entry = myHaiku
             myEntry.entry_status = default_status
             myEntry.save()
-            form = EntryForm()
+            form = SubmitEntryForm()
             success = True
             line1 = ''
             line2 = ''
@@ -85,11 +85,10 @@ def submit_an_entry(request):
         else:
             form.errors
     else:
-        form = EntryForm()
+        form = SubmitEntryForm()
 
     return render(request, 'haikuapp/submit_an_entry.html', {
         "visitor_access": visitor_access,
-        "link_active_entry": link_active_entry,
         "form": form,
         "success": success,
         "line1": line1,
@@ -181,7 +180,7 @@ def update_haiku_entries(request, h_id):
     else:
         form = EntryForm(instance=entry)
 
-    return render(request, 'haikuapp/haiku_entry_form.html',{
+    return render(request, 'haikuapp/haiku_entry_form.html', {
         "user_logged_in": user_logged_in,
         "form": form,
         "line1": line1,

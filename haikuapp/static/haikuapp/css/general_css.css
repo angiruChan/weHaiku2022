@@ -40,6 +40,9 @@ body{ font-family: 'Poppins', sans-serif; }
 .text-magenta {
     color: #9f2064;
 }
+.text-magenta-light{
+    color: #c8277d;
+}
 .text-yellow {
     color: #fcb045;
 }
@@ -170,6 +173,17 @@ a.add_button:hover, .editIcon:hover, .deleteIcon:hover{
 a.linkStyle1{
   text-decoration: none;
   color: black;
+}
+.links a{
+    text-decoration: none;
+    color: #ababab;
+}
+
+.links a:hover{
+    color: white;
+}
+.socialLnk{
+    padding: 10px 15px 0px 0px;
 }
 
 /*********************** BUTTON ***********************/

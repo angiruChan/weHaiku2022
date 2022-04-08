@@ -175,7 +175,7 @@
                         <img src="{{ f.image.url }}" class="card-img-top haikuImg">
                     </div>
                     <!-- Card footer -->
-                    <div class="card-footer bg-white">
+                    <div class="card-footer bg-white" style="">
                         <div class="d-flex justify-content-between mt-2">
                             <div class="text-secondary small align-bottom">
                                 by <span class="text-magenta fw-bold">{{ f.author }}</span>
@@ -248,4 +248,5 @@
     </div>
 </div>
 
+{% include "haikuapp/footer.html" %}
 {% endblock content %}

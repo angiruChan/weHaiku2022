@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .encryption_util import encrypt, decrypt
+from django.db.models import Q
+
 from .forms import *
 
 
@@ -40,9 +42,15 @@ def user_logout(request):
 def index(request):
     link_active_home = True
     visitor_access = True
+    haiku_posts = Haiku.objects.filter(is_deleted=False, category__is_deleted=False,
+                                       haiku_status="show").order_by('-date_created')
+    featured_posts = Haiku.objects.filter(is_deleted=False, category__is_deleted=False,
+                                          haiku_status="featured").order_by('-date_created')
     return render(request, 'haikuapp/index.html', {
         "visitor_access": visitor_access,
         "link_active_home": link_active_home,
+        "haiku_posts": haiku_posts,
+        "featured_posts": featured_posts,
     })
 
 

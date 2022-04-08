@@ -4,21 +4,18 @@
 
 {% block custom_css %}
 <style>
-    .famousCon{
+    .famousCon, .haikuPosts, .featuredHaiku{
         background-repeat: no-repeat;
         background-size: cover;
         width: 100%;
         padding-bottom: 10%;
     }
     .mastersCon{
-        max-height: 400px;
         background-repeat: no-repeat;
         background-size: cover;
         width: 100%;
-        margin-bottom: 50%;
     }
     .masters-bg{
-        position: relative;
         background-attachment: fixed;
         min-height: 300px;
     }
@@ -37,6 +34,9 @@
         text-align: center;
         border-radius: 15px 50px 20px;
         position: relative;
+    }
+    .featuredHaiku{
+        padding-bottom: 3%;
     }
 </style>
 {% endblock custom_css %}
@@ -66,7 +66,7 @@
                             <br>You can't waste a Time!
                         </p>
                         <div class="w-100" style="position: relative;">
-                            <a href="#" class="primaryButton">
+                            <a href="/submit_an_entry" class="primaryButton">
                                 <span class="text">Submit an Entry</span>
                                 <span class="arrow-text" style="padding-left: 8%; font-size: large;">→</span>
                             </a>
@@ -87,7 +87,7 @@
                             <br>as if flowers were dancing in the sun.
                         </p>
                         <div class="w-100" style="position: relative;">
-                            <a href="#" class="primaryButton">
+                            <a href="/submit_an_entry" class="primaryButton">
                                 <span class="text">Submit an Entry</span>
                                 <span class="arrow-text" style="padding-left: 8%; font-size: large;">→</span>
                             </a>
@@ -111,6 +111,7 @@
     </div>
 </div>
 
+
 <!--Famous Haiku Posts -->
 <div class="famousCon" style="background-image: url({% static 'haikuapp/images/doodle-bg.png' %});">
     <div class="p-4 slide-right">
@@ -133,6 +134,9 @@
             <div class="p-3" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
                 <div class="item-zoom"><img src="{% static 'haikuapp/images/famous5.png' %}"></div>
             </div>
+            <div class="p-3" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom">
+                <div class="item-zoom"><img src="{% static 'haikuapp/images/famous6.png' %}"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -152,6 +156,94 @@
         </div>
         <div class="col-md-5 masters-bg"
              style="background-image: url({% static 'haikuapp/images/haiku-masters.jpg' %});">
+        </div>
+    </div>
+</div>
+
+
+<!-- Featured Haiku Posts -->
+<div class="featuredHaiku bg-grey">
+    <div class="p-4 slide-right">
+        <div class="boxHeader h4 p-3 mt-4 mb-4" data-aos="fade-right">
+            <span>Featured Haiku</span>
+        </div>
+        <div class="row row-cols-1 row-cols-xl-4 row-cols-md-2 g-4 w-75 mx-auto">
+            {% for f in featured_posts %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="p-2" style="overflow: hidden;">
+                        <img src="{{ f.image.url }}" class="card-img-top haikuImg">
+                    </div>
+                    <!-- Card footer -->
+                    <div class="card-footer bg-white">
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="text-secondary small align-bottom">
+                                by <span class="text-magenta fw-bold">{{ f.author }}</span>
+                            </div>
+                            <div class="menuOptions">
+                                <!-- Comment Button -->
+                                <a href="#" class="linkStyle1">
+                                    <img src="{% static 'haikuapp/images/comments.png' %}" class="editIcon" title="comments">
+                                    <span class="text-grey small align-bottom">0</span>
+                                </a>
+
+                                <span class="p-1" style="color:#cccbcb;">|</span>
+                                <!-- Rating Button -->
+                                <a href="#" class="linkStyle1">
+                                    <img src="{% static 'haikuapp/images/star.png' %}" class="deleteIcon" title="ratings">
+                                    <span class="text-grey small align-bottom">0</span>
+
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Display all Haiku Posts -->
+<div class="haikuPosts">
+    <div class="p-4 slide-right">
+        <div class="boxHeader h4 p-3 mt-4 mb-4" data-aos="fade-right">
+            <span>Haiku Posts</span>
+        </div>
+        <div class="row row-cols-1 row-cols-xl-4 row-cols-md-2 g-4 w-75 mx-auto">
+            {% for post in haiku_posts %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="p-2" style="overflow: hidden;">
+                        <img src="{{ post.image.url }}" class="card-img-top haikuImg">
+                    </div>
+                    <!-- Card footer -->
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="text-secondary small align-bottom">
+                                by <span class="text-magenta fw-bold">{{ post.author }}</span>
+                            </div>
+                            <div class="menuOptions">
+                                <!-- Comment Button -->
+                                <a href="#" class="linkStyle1">
+                                    <img src="{% static 'haikuapp/images/comments.png' %}" class="editIcon" title="comments">
+                                    <span class="text-grey small align-bottom">0</span>
+                                </a>
+
+                                <span class="p-1" style="color:#cccbcb;">|</span>
+                                <!-- Rating Button -->
+                                <a href="#" class="linkStyle1">
+                                    <img src="{% static 'haikuapp/images/star.png' %}" class="deleteIcon" title="ratings">
+                                    <span class="text-grey small align-bottom">0</span>
+
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

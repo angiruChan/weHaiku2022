@@ -34,18 +34,29 @@
                 {% endif %}
 
                 {% if user_logged_in %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/user_home">Home</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         Manager Options
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if link_active_haiku %}
+                        <li><a class="dropdown-item text-magenta fw-bold" href="/user_haiku">Haiku</a></li>
+                        {% else %}
                         <li><a class="dropdown-item" href="/user_haiku">Haiku</a></li>
+                        {% endif %}
+
+                        {% if link_active_entries %}
+                        <li><a class="dropdown-item text-magenta fw-bold" href="/user_haiku_entries">Haiku Entries</a></li>
+                        {% else %}
                         <li><a class="dropdown-item" href="/user_haiku_entries">Haiku Entries</a></li>
-                        <li><a class="dropdown-item" href="#">Comments</a></li>
+                        {% endif %}
+
+                        {% if link_active_comments %}
+                        <li><a class="dropdown-item text-magenta fw-bold" href="/user_comments">Comments</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="/user_comments">Comments</a></li>
+                        {% endif %}
                     </ul>
                 </li>
                 <li class="nav-item">

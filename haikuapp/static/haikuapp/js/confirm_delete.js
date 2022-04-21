@@ -35,3 +35,13 @@ function confirmDelete_Haiku(id){
     myModal2();
     document.getElementById('confirm_del_haiku').value = id;
 }
+
+
+// Add Comment Modal
+function exitCommentModal(){
+    document.getElementById('commentModal').style.display='none'
+}
+function addComment(val){
+    document.getElementById('commentModal').style.display='block'
+}
+

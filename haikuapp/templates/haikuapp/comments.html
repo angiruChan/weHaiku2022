@@ -1,10 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "haikuapp/base.html" %}
+{% load static %}
+{% block title %} {{ title }} {% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block custom_css %}
+<style>
+    body{
+        background-image: url({% static 'haikuapp/images/magenta-bg.png' %});
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        min-height: 100vh;
+    }
+    .outerCon{
+        padding-top: 4%;
+        padding-bottom: 4%;
+    }
+    .container2{
+        padding: 2%;
+        width: 70%;
+        z-index:0;
+    }
+    .scrollCon{
+        overflow-y: auto;
+        max-height: 240px;
+    }
+    .alertMsg{
+        z-index: 1;
+    }
+
+    @media only screen and (max-width: 1300px){
+        .outerCon{
+            padding-top: 10%;
+            padding-bottom: 20%;
+        }
+        .container2{
+            width: 80%;
+        }
+    }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+<div class="outerCon">
+    <div class="w-sm-100 mx-auto container2 card">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ haiku.image.url }}" class="w-100">
+            </div>
+            <div class="col-md-6">
+
+                <!-- Success & Error Messages -->
+                {% if err_msg %}
+                <div class="alert alert-danger alert-dismissible fade show alertMsg" role="alert">
+                    <strong>{{ err_msg }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% elif success_msg %}
+                <div class="alert alert-success alert-dismissible fade show alertMsg" role="alert">
+                    <strong>{{ success_msg }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+
+                <div class="p-4">
+                    <div class="h3 fw-bold">Comments</div>
+                    <div class="w-100 mx-auto text-center pt-4 pb-4">
+                        <img src="{% static 'haikuapp/images/comment_graphics.png' %}" class="w-50">
+                    </div>
+                    <a onclick="addComment()"
+                       class="btn btn-outline-magenta btn-sm align-middle">Add Comment</a>
+                </div>
+
+                <!-- List of Comments -->
+                {% if h_comments %}
+                <div class="w-100 pt-1 p-2 scrollCon card">
+                    <ul class="list-group list-group-flush">
+                        {% for c in h_comments %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img src="{% static 'haikuapp/images/user.png' %}" width="25">
+                                </div>
+                                <div class="col-11">
+                                    <div class="fw-bold text-grey">{{ c.name }}</div>
+                                    <div class="small">{{ c.comment }}</div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <div class="h6 w-100 p-4 pt-0">No comments yet</div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Comment Form Modal-->
+<form method="POST">
+    {% csrf_token %}
+    <div id="commentModal" class="w3-modal customModelCon" style=" z-index: 10;">
+        <div class="w3-modal-content w3-animate-top customHeadModal" style="max-width: 500px;">
+            <header class="bg-magenta p-4">
+                <span class="text-light h5 ">Add Comment</span>
+                <button type="button" onclick="exitCommentModal()"
+                        class="btn btn-outline-light btn-sm float-end">&times;</button>
+            </header>
+
+            <div class="small text-danger p-4 pb-2"><span class="fw-bold">Note:</span> Comments still need approval from the
+                admin. Therefore it won't be display directly in the comment section
+            </div>
+
+            <div class="p-4 w-100 pt-0">
+                <div class="p-1">{{ form.name|as_crispy_field }}</div>
+                <div class="p-1">{{ form.email|as_crispy_field }}</div>
+                <div class="p-1">{{ form.comment|as_crispy_field }}</div>
+                <div class="p-1">{{ form.rating|as_crispy_field }}</div>
+            </div>
+            <footer class="w3-container bg-light pb-3">
+                <div class="col-md-12 pt-3">
+                    <button type="submit" class="btn btn-magenta">Submit</button>
+                    <button type="button" onclick="exitCommentModal()" class="btn btn-grey">
+                        Cancel
+                    </button>
+                </div>
+            </footer>
+        </div>
+    </div>
+</form>
+<script src="{% static 'haikuapp/js/confirm_delete.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .encryption_util import encrypt
+from django.db.models import Avg
 
 
 class Category(models.Model):
@@ -21,7 +22,6 @@ class Category(models.Model):
 
 
 class Haiku(models.Model):
-
     COMMENT_STATUS_CHOICES = (
         ('', '---------'),
         ('hide', 'hide'),
@@ -51,6 +51,12 @@ class Haiku(models.Model):
     def encrypt_haiku(self):
         return encrypt(self.id)
 
+    def total_comments(self):
+        return Comment.objects.filter(haiku=self, comment_status="show", is_deleted=False).count()
+
+    def total_rating(self):
+        return Comment.objects.filter(haiku=self, is_deleted=False).aggregate(Avg('rating'))['rating__avg']
+
 
 class Comment(models.Model):
     COMMENT_STATUS_CHOICES = (
@@ -73,6 +79,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment
 
+    def encrypt_comment(self):
+        return encrypt(self.id)
+
 
 class Entry_Status(models.Model):
     entry_status = models.CharField(max_length=45, unique=True)
@@ -86,7 +95,6 @@ class Entry_Status(models.Model):
 
 
 class Entry(models.Model):
-
     THEMES = {
         ('', '---------'),
         ('human nature', 'human nature'),
@@ -113,12 +121,3 @@ class Entry(models.Model):
 
     def encrypt_entry(self):
         return encrypt(self.id)
-
-
-
-
-
-
-
-
-

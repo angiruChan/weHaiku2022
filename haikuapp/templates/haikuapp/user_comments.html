@@ -1,10 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "haikuapp/base.html" %}
+{% load static %}
+{% block title %} Manager Options | Haiku Entries {% endblock title %}
+
+
+{% block custom_css %}
+<style>
+    .container2{
+        padding: 4% 0% 4% 0%;
+    }
+    .iconSize{
+        width: 10px;
+    }
+    .list-group-item{
+        border: 1px solid #bababa;
+    }
+</style>
+{% endblock custom_css %}
+
+
+{% block content %}
+{% include "haikuapp/navigation_bar.html" %}
+
+<div class="w-75 mx-auto container2">
+    <div class="h3 pt-1 pb-3 pt-md-0">HAIKU COMMENTS</div>
+
+    <!-- Calling all haiku entries -->
+    <div class="">
+        <div class="row row-cols-1 row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
+            {% for h in h_comments %}
+            <div class="col">
+                <div class="card h-100 ">
+                    <!-- Haiku Status & Menu Options -->
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="mb-1 fw-lighter">
+                                {% if h.comment_status == 'show' %}
+                                <span class="badge bg-pastel-green">{{ h.comment_status }}</span>
+                                {% else %}
+                                <span class="badge bg-pastel-red">{{ h.comment_status }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="menuOptions">
+                                <!-- Update Button -->
+                                <a href="/update_comment/{{ h.encrypt_comment }}"><img
+                                        src="{% static 'haikuapp/images/edit.png' %}" class="editIcon" title="edit"></a>
+                            </div>
+                        </div>
+                    </div>
+
+<!--                    <div class="p-1" style="overflow: hidden;">-->
+<!--                        <img src="{{  h.haiku.image.url }}" class="card-img-top haikuImg">-->
+<!--                    </div>-->
+                    <div class="card-body">
+                        <div class="small">
+                            <div><span class="fw-bold pr-6">Comment:</span>{{ h.comment }}</div>
+                            <div><span class="fw-bold pr-6">Rating:</span>{{ h.rating }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -24,6 +24,9 @@
     .item-zoom {
         width: 330px;
     }
+    .slider__subText{
+        font-size: 3vw;
+    }
 }
 
 /*********************** RESPONSIVE FOR 900px ***********************/

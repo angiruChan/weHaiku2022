@@ -11,7 +11,7 @@
 
     <!-- Display All Haiku -->
     <div class="container scrollCon">
-        <div class="row row-cols-1 row-cols-xl-3 row-cols-sm-2 g-4" style="">
+        <div class="row row-cols-1 row-cols-xl-3 row-cols-sm-2 g-4">
             {% for h in haiku %}
             <div class="col">
                 <div class="card h-100">
@@ -21,7 +21,7 @@
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="small pt-2">
+                        <div class="small">
                             <div><span class="fw-bold pr-6">Author:</span>{{ h.author }}</div>
                             <div><span class="fw-bold pr-6">Title:</span>{{ h.title }}</div>
                             <div><span class="fw-bold pr-6">Category:</span>{{ h.category }}</div>
@@ -29,7 +29,7 @@
                     </div>
                     <!-- Haiku Status & Menu Options -->
                     <div class="card-footer">
-                        <div class="d-flex justify-content-between mt-2">
+                        <div class="d-flex justify-content-between">
                             <div class="mb-1 fw-lighter">
                                 {% if h.haiku_status == 'show' %}
                                 <span class="badge bg-pastel-green">{{ h.haiku_status }}</span>

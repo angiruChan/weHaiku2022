@@ -182,17 +182,16 @@
                             </div>
                             <div class="menuOptions">
                                 <!-- Comment Button -->
-                                <a href="#" class="linkStyle1">
+                                <a href="/comments/{{ f.encrypt_haiku }}" class="linkStyle1">
                                     <img src="{% static 'haikuapp/images/comments.png' %}" class="editIcon" title="comments">
-                                    <span class="text-grey small align-bottom">0</span>
+                                    <span class="text-grey small align-bottom">{{ f.total_comments }}</span>
                                 </a>
 
                                 <span class="p-1" style="color:#cccbcb;">|</span>
                                 <!-- Rating Button -->
                                 <a href="#" class="linkStyle1">
                                     <img src="{% static 'haikuapp/images/star.png' %}" class="deleteIcon" title="ratings">
-                                    <span class="text-grey small align-bottom">0</span>
-
+                                    <span class="text-grey small align-bottom">{{ f.total_rating }}</span>
                                 </a>
                             </div>
                         </div>
@@ -226,18 +225,18 @@
                             </div>
                             <div class="menuOptions">
                                 <!-- Comment Button -->
-                                <a href="#" class="linkStyle1">
+                                <a href="/comments/{{ post.encrypt_haiku }}" class="linkStyle1">
                                     <img src="{% static 'haikuapp/images/comments.png' %}" class="editIcon" title="comments">
-                                    <span class="text-grey small align-bottom">0</span>
+                                    <span class="text-grey small align-bottom">{{ post.total_comments }}</span>
                                 </a>
 
                                 <span class="p-1" style="color:#cccbcb;">|</span>
                                 <!-- Rating Button -->
                                 <a href="#" class="linkStyle1">
                                     <img src="{% static 'haikuapp/images/star.png' %}" class="deleteIcon" title="ratings">
-                                    <span class="text-grey small align-bottom">0</span>
-
+                                    <span class="text-grey small align-bottom">{{ post.total_rating }}</span>
                                 </a>
+
                             </div>
                         </div>
                     </div>

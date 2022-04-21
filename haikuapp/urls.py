@@ -20,4 +20,7 @@ urlpatterns = [
     path("add_haiku/", views.add_haiku, name="add_haiku"),
     path("update_haiku/<str:h_id>/", views.update_haiku, name="update_haiku"),
     path("delete_haiku/", views.delete_haiku, name="delete_haiku"),
+    path("comments/<str:c_id>", views.comments, name="comments"),
+    path("user_comments/", views.user_comments, name="user_comments"),
+    path("update_comment/<str:c_id>", views.update_comment, name="update_comment"),
 ]

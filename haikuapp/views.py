@@ -19,7 +19,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/user_home')
+                return redirect('/user_haiku')
             else:
                 message = "Invalid username or password."
         else:
@@ -113,6 +113,7 @@ def user_haiku_entries(request):
         return render(request, 'haikuapp/user_haiku_entries.html', {
             "haiku": haiku,
             "user_logged_in": user_logged_in,
+            "link_active_entries": True,
         })
     else:
         HttpResponse("access not granted")
@@ -226,6 +227,7 @@ def user_haiku(request):
             "categories": categories,
             "haiku": haiku,
             "user_logged_in": user_logged_in,
+            "link_active_haiku": True,
         })
     else:
         HttpResponse("access not granted")
@@ -370,3 +372,77 @@ def delete_haiku(request):
         return redirect('/user_haiku')
     else:
         pass
+
+
+def comments(request, c_id):
+    title = "Comments"
+    haiku = get_object_or_404(Haiku, pk=decrypt(c_id))
+    h_comments = Comment.objects.filter(haiku=haiku, comment_status="show", is_deleted=False).order_by('-date_created')
+    err_msg = ''
+    success_msg = ''
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            myComment = form.save(commit=False)
+            myComment.haiku = haiku
+            myComment.comment_status = "hide"
+            form.save()
+            form = CommentForm()
+            success_msg = 'Comment Successfully Submitted'
+        else:
+            form.errors
+            err_msg = 'Comment Unsuccessfully Submitted'
+    else:
+        form = CommentForm()
+    return render(request, 'haikuapp/comments.html', {
+        "haiku": haiku,
+        "h_comments": h_comments,
+        "title": title,
+        "visitor_access": True,
+        "form": form,
+        "err_msg": err_msg,
+        "success_msg": success_msg,
+    })
+
+
+@login_required(login_url='/')
+def user_comments(request):
+    if request.user.is_authenticated:
+        h_comments = Comment.objects.filter(is_deleted=False).order_by('-date_created')
+        return render(request, 'haikuapp/user_comments.html', {
+            "h_comments": h_comments,
+            "link_active_comments": True,
+            "user_logged_in": True,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def update_comment(request, c_id):
+    if request.user.is_authenticated:
+        title = 'Update Comment'
+        user_logged_in = True
+        success_msg = ''
+        comment = get_object_or_404(Comment, pk=decrypt(c_id))
+
+        if request.method == "POST":
+            form = UserCommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                form.save()
+                success_msg = "Successfully Updated!"
+            else:
+                form.errors
+        else:
+            form = UserCommentForm(instance=comment)
+
+        return render(request, 'haikuapp/comment_form.html', {
+            "user_logged_in": user_logged_in,
+            "form": form,
+            "title": title,
+            "comment": comment,
+            "success_msg": success_msg,
+        })
+    else:
+        HttpResponse("access not granted")

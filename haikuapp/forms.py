@@ -111,3 +111,34 @@ class HaikuForm(forms.ModelForm):
     class Meta:
         model = Haiku
         fields = ("author", "title", "haiku_status", "image", "category")
+
+
+class CommentForm(forms.ModelForm):
+    # custom fields
+    name = forms.CharField(label="Name", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 150}))
+    email = forms.EmailField(label="Email", required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '', 'maxlength': 254}))
+    comment = forms.CharField(required=True, label="Comment", widget=forms.Textarea(
+        attrs={'class': 'form-control', 'rows': 2, 'maxlength': 500}))
+    rating = forms.FloatField(required=True, label="Rating", max_value=5, min_value=1,
+                              widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': ''}))
+
+    class Meta:
+        model = Comment
+        fields = ("name", "email", "comment", "rating")
+
+
+class UserCommentForm(forms.ModelForm):
+    COMMENT_STATUS_CHOICES = (
+        ('', '---------'),
+        ('hide', 'hide'),
+        ('show', 'show'),
+    )
+    # custom fields
+    comment_status = forms.ChoiceField(choices=sorted(COMMENT_STATUS_CHOICES), label="", initial='',
+                                       widget=forms.Select(attrs={'class': 'form-select'}), required=True)
+
+    class Meta:
+        model = Comment
+        fields = ("comment_status",)

@@ -32,6 +32,7 @@ class EntryModel(admin.ModelAdmin):
     list_filter = ['haiku_theme', 'is_deleted']
 
 
+# display
 admin.site.register(Category, CategoryModel)
 admin.site.register(Haiku, HaikuModel)
 admin.site.register(Comment, CommentModel)

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#k3%6ucs6fde=u7p5%2#lp%2%oa&87f(zc2!02xv&+j@=2%8$_'
 
 # this is your "password/ENCRYPT_KEY". keep it in settings.py file
-ENCRYPT_KEY = b'wkLXj5BsnZtApMyD2_lOrO7Ui0BW4t6eX1ULJztb5cM='
+ENCRYPT_KEY = b'kjSq7ILj0qUH_NOtTsR7R3U-j4e4nVXfNaduAXg4oik='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

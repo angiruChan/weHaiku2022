@@ -446,3 +446,8 @@ def update_comment(request, c_id):
         })
     else:
         HttpResponse("access not granted")
+
+
+def about_us_page(request):
+    return render(request, 'haikuapp/about_us.html', {
+        "visitor_access": True, })

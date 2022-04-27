@@ -34,4 +34,13 @@
     #scrollAnimate{
         display: none;
     }
+    .aboutUs{
+        font-size: 7.8vw;
+    }
+    .mission, .mission-text{
+        padding: 30% 5% 0% 5%;
+    }
+    .mission-text{
+        padding: 0% 5% 30% 5%;
+    }
 } 

@@ -155,7 +155,6 @@ a.add_button:hover, .editIcon:hover, .deleteIcon:hover{
 }
 .haikuImg {
     position: relative;
-
     width: 100%;
     height: 200px;
     object-fit: cover;
@@ -184,6 +183,36 @@ a.linkStyle1{
 }
 .socialLnk{
     padding: 10px 15px 0px 0px;
+}
+.aboutUs{
+    font-weight: 600;
+    font-size: 3.8vw;
+    color: white;
+    text-align: center;
+}
+.aboutSubTxt{
+    letter-spacing: 1px;
+    color: white;
+}
+.webDev{
+    font-weight: 600;
+}
+.name{
+    letter-spacing: 3px;
+}
+.devContent{
+    width: 100%;
+    height: 100%;
+    padding-top: 8%;
+}
+.mission{
+    padding-top: 12%;
+}
+.mission-text{
+    padding-bottom: 12%;
+    text-align: center;
+    font-size: 20px;
+    font-style: italic;
 }
 
 /*********************** BUTTON ***********************/

@@ -23,4 +23,5 @@ urlpatterns = [
     path("comments/<str:c_id>", views.comments, name="comments"),
     path("user_comments/", views.user_comments, name="user_comments"),
     path("update_comment/<str:c_id>", views.update_comment, name="update_comment"),
+    path("about_us_page/", views.about_us_page, name="about_us_page"),
 ]

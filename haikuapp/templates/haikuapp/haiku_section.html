@@ -9,6 +9,47 @@
         </a>
     </div>
 
+    <div class="d-flex flex-row bd-highlight mb-3">
+        <!-- Filter Display for Category -->
+        <div class="p-1">
+            <div class="dropdown">
+                <button class="btn-sm border border-dark" type="button" id="sort_categ"
+                        data-bs-toggle="dropdown" aria-expanded="false"><span class="px-1">Category</span>
+                    <i class='bx bxs-down-arrow align-middle'></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sort_categ">
+                    <li><a class="dropdown-item small" href="/user_haiku"> - all - </a></li>
+                    {% for c in categories %}
+                    <li><a class="dropdown-item small"
+                           href="/filter_haiku/{{ c.encrypt_category }}">{{ c.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+         <!-- Filter Display for Haiku Status -->
+        <div class="p-1">
+            <div class="dropdown">
+                <button class="btn-sm border border-dark" type="button" id="sort_status"
+                        data-bs-toggle="dropdown" aria-expanded="false"><span class="px-1">Haiku Status</span>
+                        <i class='bx bxs-down-arrow align-middle'></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sort_status">
+                    <li><a class="dropdown-item small" href="/user_haiku"> - all - </a></li>
+                    <li><a class="dropdown-item small" href="/filter_haiku_status/show"> show </a></li>
+                    <li><a class="dropdown-item small" href="/filter_haiku_status/hide"> hide </a></li>
+                    <li><a class="dropdown-item small" href="/filter_haiku_status/featured"> featured </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display Count Results -->
+     <p class="small text-secondary">
+        {% with total=haiku.count %}
+            {{ total }} result{{ total|pluralize }}
+        {% endwith %}
+    </p>
+
     <!-- Display All Haiku -->
     <div class="container scrollCon">
         <div class="row row-cols-1 row-cols-xl-3 row-cols-sm-2 g-4">

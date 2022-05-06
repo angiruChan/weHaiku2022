@@ -55,7 +55,12 @@ class Haiku(models.Model):
         return Comment.objects.filter(haiku=self, comment_status="show", is_deleted=False).count()
 
     def total_rating(self):
-        return Comment.objects.filter(haiku=self, is_deleted=False).aggregate(Avg('rating'))['rating__avg']
+        rating = Comment.objects.filter(haiku=self, is_deleted=False).aggregate(Avg('rating'))['rating__avg']
+
+        if rating is None:
+            rating = "-"
+
+        return rating
 
 
 class Comment(models.Model):
@@ -89,6 +94,9 @@ class Entry_Status(models.Model):
 
     def __str__(self):
         return self.entry_status
+
+    def encrypt_eStatus(self):
+        return encrypt(self.id)
 
     class Meta:
         verbose_name_plural = "Entry Status"

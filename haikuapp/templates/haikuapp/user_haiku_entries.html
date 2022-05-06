@@ -14,6 +14,7 @@
     .list-group-item{
         border: 1px solid #bababa;
     }
+
 </style>
 {% endblock custom_css %}
 
@@ -22,7 +23,7 @@
 {% include "haikuapp/navigation_bar.html" %}
 
 <div class="w-75 mx-auto container2">
-    <div class="d-flex pb-3 justify-content-between">
+    <div class="d-flex mb-3 justify-content-between">
         <div class="h3 pt-1 pt-md-0">HAIKU ENTRIES</div>
         <!-- Add button -->
         <a class="btn btn-outline-magenta align-middle" href="/add_haiku_entries">
@@ -31,12 +32,53 @@
         </a>
     </div>
 
+    <div class="d-flex flex-row bd-highlight">
+        <!-- Filter Display for Entry Status -->
+        <div class="p-1">
+            <div class="dropdown">
+                <button class="btn-sm border border-dark" type="button" id="sort_categ"
+                        data-bs-toggle="dropdown" aria-expanded="false"><span class="px-1">Entry Status</span>
+                    <i class='bx bxs-down-arrow align-middle'></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sort_categ">
+                    <li><a class="dropdown-item small" href="/user_haiku_entries"> - all - </a></li>
+                    {% for e in e_status %}
+                    <li><a class="dropdown-item small"
+                           href="/filter_haiku_entry_status/{{ e.encrypt_eStatus }}">{{ e.entry_status }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- Filter Display for Haiku Status -->
+        <div class="p-1">
+            <div class="dropdown">
+                <button class="btn-sm border border-dark" type="button" id="sort_status"
+                        data-bs-toggle="dropdown" aria-expanded="false"><span class="px-1">Theme</span>
+                    <i class='bx bxs-down-arrow align-middle'></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sort_status">
+                    <li><a class="dropdown-item small" href="/user_haiku_entries"> - all - </a></li>
+                    <li><a class="dropdown-item small" href="/filter_haiku_entry_theme/human nature">human nature</a></li>
+                    <li><a class="dropdown-item small" href="/filter_haiku_entry_theme/nature and seasons">
+                        nature and seasons</a></li>
+                    <li><a class="dropdown-item small" href="/filter_haiku_entry_theme/others">others</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display Count Results -->
+    <p class="small text-secondary p-1">
+        {% with total=haiku.count %}
+        {{ total }} result{{ total|pluralize }}
+        {% endwith %}
+    </p>
+
     <!-- Calling all haiku entries -->
     <div class="list-group">
         <ul class="list-group">
             {% for h in haiku %}
             <li class="list-group-item">
-
                 <div class="d-flex w-100 justify-content-between">
                     <div class="mb-1">
                         {% if h.entry_status.entry_status == 'approved' %}
@@ -48,7 +90,6 @@
                         {% else %}
                         <span class="badge bg-pastel-purple align-bottom small">{{ h.entry_status }}</span>
                         {% endif %}
-
                     </div>
 
                     <!-- Update & Delete Buttons-->
@@ -92,7 +133,8 @@
             <header class="bg-magenta p-4">
                 <span class="text-light h5 ">Delete Confirmation</span>
                 <button type="button" onclick="exitModal()"
-                        class="btn btn-outline-light btn-sm float-end">&times;</button>
+                        class="btn btn-outline-light btn-sm float-end">&times;
+                </button>
             </header>
             <div class="p-4 w-100 text-center">
                 <img src="{% static 'haikuapp/images/frown-face.png'%}" class="w-25">

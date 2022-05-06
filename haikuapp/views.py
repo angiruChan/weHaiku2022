@@ -108,16 +108,43 @@ def submit_an_entry(request):
 @login_required(login_url='/')
 def user_haiku_entries(request):
     if request.user.is_authenticated:
-        user_logged_in = True
         haiku = Entry.objects.filter(is_deleted=False).order_by('-date_created')
         return render(request, 'haikuapp/user_haiku_entries.html', {
             "haiku": haiku,
-            "user_logged_in": user_logged_in,
+            "e_status": Entry_Status.objects.all(),
+            "user_logged_in": True,
             "link_active_entries": True,
         })
     else:
         HttpResponse("access not granted")
 
+
+@login_required(login_url='/')
+def filter_haiku_entry_status(request, es_id):
+    if request.user.is_authenticated:
+        haiku = Entry.objects.filter(is_deleted=False, entry_status__id=decrypt(es_id)).order_by('-date_created')
+        return render(request, 'haikuapp/user_haiku_entries.html', {
+            "haiku": haiku,
+            "e_status": Entry_Status.objects.all(),
+            "user_logged_in": True,
+            "link_active_entries": True,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def filter_haiku_entry_theme(request, value):
+    if request.user.is_authenticated:
+        haiku = Entry.objects.filter(is_deleted=False, haiku_theme=value).order_by('-date_created')
+        return render(request, 'haikuapp/user_haiku_entries.html', {
+            "haiku": haiku,
+            "e_status": Entry_Status.objects.all(),
+            "user_logged_in": True,
+            "link_active_entries": True,
+        })
+    else:
+        HttpResponse("access not granted")
 
 @login_required(login_url='/')
 def add_haiku_entries(request):
@@ -220,13 +247,44 @@ def haiku_entry_combine(line1, line2, line3):
 @login_required(login_url='/')
 def user_haiku(request):
     if request.user.is_authenticated:
-        user_logged_in = True
         categories = Category.objects.filter(is_deleted=False).order_by('-date_created')
         haiku = Haiku.objects.filter(is_deleted=False, category__is_deleted=False).order_by('-date_created')
         return render(request, 'haikuapp/user_haiku.html', {
             "categories": categories,
             "haiku": haiku,
-            "user_logged_in": user_logged_in,
+            "user_logged_in": True,
+            "link_active_haiku": True,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def filter_haiku(request, c_id):
+    if request.user.is_authenticated:
+        categories = Category.objects.filter(is_deleted=False).order_by('-date_created')
+        haiku = Haiku.objects.filter(is_deleted=False, category__is_deleted=False, category__id=decrypt(c_id))\
+            .order_by('-date_created')
+        return render(request, 'haikuapp/user_haiku.html', {
+            "categories": categories,
+            "haiku": haiku,
+            "user_logged_in": True,
+            "link_active_haiku": True,
+        })
+    else:
+        HttpResponse("access not granted")
+
+
+@login_required(login_url='/')
+def filter_haiku_status(request, value):
+    if request.user.is_authenticated:
+        categories = Category.objects.filter(is_deleted=False).order_by('-date_created')
+        haiku = Haiku.objects.filter(is_deleted=False, category__is_deleted=False, haiku_status=value)\
+            .order_by('-date_created')
+        return render(request, 'haikuapp/user_haiku.html', {
+            "categories": categories,
+            "haiku": haiku,
+            "user_logged_in": True,
             "link_active_haiku": True,
         })
     else:

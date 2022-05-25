@@ -29,7 +29,7 @@ ENCRYPT_KEY = b'kjSq7ILj0qUH_NOtTsR7R3U-j4e4nVXfNaduAXg4oik='
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['wehaiku.herokuapp.com']
 
 # Application definition
 
@@ -52,6 +52,9 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
+    # added whitenoise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

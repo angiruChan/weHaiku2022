@@ -3,6 +3,10 @@
     .customCard{
         width: 100%;
     }
+    .smBox{
+        width: 80%;
+        color: #f7f7f7;
+    }
 }
 
 /*********************** RESPONSIVE FOR 768px ***********************/
@@ -26,6 +30,9 @@
     }
     .slider__subText{
         font-size: 3vw;
+    }
+    .hiddenImg{
+        display: none;
     }
 }
 

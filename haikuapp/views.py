@@ -297,16 +297,21 @@ def add_category(request):
         title = 'Add Category'
         user_logged_in = True
         success_msg = ''
+        err_msg = ''
 
         if request.method == "POST":
             form = CategoryForm(request.POST)
             if form.is_valid():
-                # create category
-                myCateg = form.save(commit=False)
-                myCateg.user = request.user
-                myCateg.save()
-                form = CategoryForm
-                success_msg = "Successfully Added!"
+                chk_category = Category.objects.filter(is_deleted=False, name__iexact=form['name'].value())
+                if chk_category:
+                    err_msg = "category already exists"
+                else:
+                    # create category
+                    myCateg = form.save(commit=False)
+                    myCateg.user = request.user
+                    myCateg.save()
+                    form = CategoryForm
+                    success_msg = "Successfully Added!"
             else:
                 form.errors
         else:
@@ -317,6 +322,7 @@ def add_category(request):
             "form": form,
             "title": title,
             "success_msg": success_msg,
+            "err_msg": err_msg,
         })
     else:
         HttpResponse("access not granted")
@@ -328,13 +334,18 @@ def update_category(request, c_id):
         title = 'Update Category'
         user_logged_in = True
         success_msg = ''
+        err_msg = ''
         category = get_object_or_404(Category, pk=decrypt(c_id))
 
         if request.method == "POST":
             form = CategoryForm(request.POST, instance=category)
             if form.is_valid():
-                form.save()
-                success_msg = "Successfully Updated!"
+                chk_category = Category.objects.filter(is_deleted=False, name__iexact=form['name'].value())
+                if chk_category:
+                    err_msg = "category already exists"
+                else:
+                    form.save()
+                    success_msg = "Successfully Updated!"
             else:
                 form.errors
         else:
@@ -345,6 +356,7 @@ def update_category(request, c_id):
             "form": form,
             "title": title,
             "success_msg": success_msg,
+            "err_msg": err_msg,
         })
     else:
         HttpResponse("access not granted")
@@ -508,4 +520,9 @@ def update_comment(request, c_id):
 
 def about_us_page(request):
     return render(request, 'haikuapp/about_us.html', {
+        "visitor_access": True, })
+
+
+def history_page(request):
+    return render(request, 'haikuapp/history.html', {
         "visitor_access": True, })

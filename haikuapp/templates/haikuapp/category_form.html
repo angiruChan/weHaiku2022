@@ -54,6 +54,11 @@
                 <strong>{{ success_msg }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            {% elif err_msg %}
+            <div class="alert alert-danger alert-sm alert-dismissible fade show small mx-auto w-100" role="alert">
+                <strong>{{ err_msg }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             {% endif %}
 
         <!-- Category Form -->
